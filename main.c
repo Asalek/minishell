@@ -60,8 +60,10 @@ int main(int argc, char **argv, char **envp)
     {
         if((line = readline(">")) != NULL)
         {
+			if (ft_isprint(line[0]))
+				add_history(line);
             if(check_line(line,envp) == 0)
-                line = readline(">");
+				line = readline(">");
             else
                 free(line);
         }

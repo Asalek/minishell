@@ -419,3 +419,9 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	}
 	return (dest);
 }
+int	ft_isprint(int c)
+{
+	if (c >= 32 && c < 127)
+		return (1);
+	return (0);
+}

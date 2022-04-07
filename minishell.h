@@ -15,21 +15,21 @@
 typedef struct s_data
 {
 	char	**envp;
-	t_list	*list;
+	struct s_linkedlist	*list;
 }	t_data;
 
 typedef struct s_linkedlist
 {
 	char	*name;
 	char	*value;
-	t_list	*next;
+	struct s_linkedlist	*next;
 }	t_list;
 
 typedef struct s_command
 {
 	char	*cmd;
 	char	*arg;
-	t_command	*next;
+	struct s_command	*next;
 }	t_command;
 
 
@@ -75,7 +75,7 @@ int	ft_isprint(int c);
 
 void	cd(char *str);
 void	*pwd();
-void	ft_exit(int i);
+void	ft_exit();
 void	ft_echo(char **str);
 void	ft_env(char **envp);
 #endif

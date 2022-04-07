@@ -9,12 +9,12 @@ int	built_in_functions(char **cmd, char **envp)
 	}
 	if (!ft_strcmp(cmd[0], "pwd"))
 	{
-		printf("%s", pwd());
+		printf("%s\n", pwd());
 		return (1);
 	}
 	if (!ft_strcmp(cmd[0], "exit"))
 	{
-		ft_exit(0);
+		ft_exit();
 		return (1);
 	}
 	if (!ft_strcmp(cmd[0], "echo"))

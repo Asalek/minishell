@@ -15,9 +15,9 @@ void	*pwd()
 	return (str);
 }
 
-void	ft_exit(int i)
+void	ft_exit()
 {
-	exit(i);
+	exit(0);
 }
 
 void	ft_echo(char **str)

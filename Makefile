@@ -1,6 +1,6 @@
 NAME = minishell
 
-SRC = main.c check_path.c libft.c excute_cmd.c
+SRC = main.c check_path.c libft.c excute_cmd.c built_in.c
 
 
 all: $(NAME)

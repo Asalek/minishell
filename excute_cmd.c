@@ -50,7 +50,10 @@ void execut_cmd(char *path,char **cmd,char *command)
     parmList[i] = NULL;
     i = fork();
     if (i == 0)
+	{
         execve(full_path, parmList, NULL);
+		exit(0);
+	}
     else
         wait(&i);
 }

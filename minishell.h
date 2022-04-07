@@ -12,6 +12,25 @@
 #include <sys/types.h>
 #include <string.h>
 
+typedef struct s_data
+{
+	char	**envp;
+	t_list	*list;
+}	t_data;
+
+typedef struct s_linkedlist
+{
+	char	*name;
+	char	*value;
+	t_list	*next;
+}	t_list;
+
+typedef struct s_command
+{
+	char	*cmd;
+	char	*arg;
+	t_command	*next;
+}	t_command;
 
 
 
@@ -53,4 +72,10 @@ int	ft_isdigit(int c);
 int	ft_isalpha(int c);
 int	ft_atoi(const char *str);
 int	ft_isprint(int c);
+
+void	cd(char *str);
+void	*pwd();
+void	ft_exit(int i);
+void	ft_echo(char **str);
+void	ft_env(char **envp);
 #endif

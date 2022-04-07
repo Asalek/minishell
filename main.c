@@ -1,11 +1,37 @@
 #include "minishell.h"
 
+int	built_in_functions(char **cmd, char **envp)
+{
+	if (!ft_strcmp(cmd[0], "cd"))
+	{
+		cd(cmd[1]);
+		return (1);
+	}
+	if (!ft_strcmp(cmd[0], "pwd"))
+	{
+		printf("%s", pwd());
+		return (1);
+	}
+	if (!ft_strcmp(cmd[0], "exit"))
+	{
+		ft_exit(0);
+		return (1);
+	}
+	if (!ft_strcmp(cmd[0], "echo"))
+	{
+		ft_echo(cmd);
+		return (1);
+	}
+	if (!ft_strcmp(cmd[0], "env"))
+	{
+		ft_env(envp);
+		return (1);
+	}
+	return 0;
+}
 
- 
 void handl_line(char *cmd,char **envp)
 {
-     
-
     char *path;
     char **split_p;
     int count;
@@ -15,14 +41,17 @@ void handl_line(char *cmd,char **envp)
     count = count_words(path,':');
     split_p = split_path(path);
     
-    char **cmd_split = ft_split(cmd,' ');// ls  -l
+    char **cmd_split = ft_split(cmd,' ');
 
     if ((full_path = cmd_found(count,split_p,cmd_split[0])) == 0)
         printf("COMMAND NOT FOUND\n");
     else
     {
         full_path = concatenate_string(full_path, "/");
-        execut_cmd(full_path,cmd_split,cmd);
+		if (built_in_functions(cmd_split, envp))
+			return ;
+		else		
+        	execut_cmd(full_path,cmd_split,cmd);
     }
 }
 
@@ -50,14 +79,11 @@ int check_line(char *str,char **envp)
     return 1;
 }
 
-
-
 int main(int argc, char **argv, char **envp)
 {
     char *line;
 
     while (1)
-    {
         if((line = readline(">")) != NULL)
         {
 			if (ft_isprint(line[0]))
@@ -67,5 +93,4 @@ int main(int argc, char **argv, char **envp)
             else
                 free(line);
         }
-    }
-}   
+}

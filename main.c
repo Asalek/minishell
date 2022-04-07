@@ -13,10 +13,7 @@ int	built_in_functions(char **cmd, char **envp)
 		return (1);
 	}
 	if (!ft_strcmp(cmd[0], "exit"))
-	{
 		ft_exit();
-		return (1);
-	}
 	if (!ft_strcmp(cmd[0], "echo"))
 	{
 		ft_echo(cmd);
@@ -43,15 +40,14 @@ void handl_line(char *cmd,char **envp)
     
     char **cmd_split = ft_split(cmd,' ');
 
+	if (built_in_functions(cmd_split, envp))
+			return ;
     if ((full_path = cmd_found(count,split_p,cmd_split[0])) == 0)
         printf("COMMAND NOT FOUND\n");
     else
     {
-        full_path = concatenate_string(full_path, "/");
-		if (built_in_functions(cmd_split, envp))
-			return ;
-		else		
-        	execut_cmd(full_path,cmd_split,cmd);
+        full_path = concatenate_string(full_path, "/");		
+        execut_cmd(full_path,cmd_split,cmd);
     }
 }
 

@@ -32,9 +32,11 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo "\033[92m░M░i░n░i░ ░S░h░e░l░l░\033[0m"
+	@echo "${WHITE}"
 	@make -C libft/
 	@$(CC) -lreadline $^ libft/libft.a -o $@
-	@echo "${WHITE}Make All${RESET}"
+	@echo "${RESET}"
+	@echo "${GREEN}all${RESET}"
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -42,11 +44,14 @@ $(NAME): $(OBJ)
 clean:
 	@rm -rf $(OBJ)
 	@make clean -C libft
+	@echo "${RED}clean${RESET}"
 
 fclean: clean
 	@rm -rf $(NAME)
 	@make fclean -C libft
+	@echo "${YELLOW}fclean${RESET}"
 
 re: fclean all
+	@echo "${PURPLE}re${RESET}"
 
 .PHONY: re all clean fclean

@@ -13,6 +13,8 @@ BONUSC = ft_lstnew.c ft_lstdelone.c ft_lstadd_back.c ft_lstsize.c ft_lstlast.c f
 BONUSO = ft_lstnew.o ft_lstdelone.o ft_lstadd_back.o ft_lstsize.o ft_lstlast.o ft_lstadd_front.o
 
 all : ${OFILES}
+	
+${OFILES}:
 	@${CC} ${FLAGS} ${CFILES}
 	@ar -r ${NAME} ${OFILES}
 clean :

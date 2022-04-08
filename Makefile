@@ -1,4 +1,5 @@
-#░M░i░n░i░ ░S░h░e░l░l░
+#		asalek (Ayoub Salek) messalih (Mustapha essalih)
+
 ifneq (,$(findstring xterm,${TERM}))
 	BLACK        := $(shell tput -Txterm setaf 0)
 	RED          := $(shell tput -Txterm setaf 1)
@@ -31,11 +32,9 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@echo "\033[92m░M░i░n░i░ ░S░h░e░l░l░\033[0m"
-	@echo "${WHITE}"
+	@echo "${WHITE}░M░i░n░i░ ░S░h░e░l░l░\033[0m"
 	@make -C libft/
 	@$(CC) -lreadline $^ libft/libft.a -o $@
-	@echo "${RESET}"
 	@echo "${GREEN}all${RESET}"
 
 %.o: %.c

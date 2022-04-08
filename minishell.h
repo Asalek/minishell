@@ -24,7 +24,7 @@ typedef struct s_linkedlist
 	char	*name;
 	char	*value;
 	struct s_linkedlist	*next;
-}	t_list;
+}	t_list2;
 
 typedef struct s_command
 {

@@ -34,7 +34,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@echo "${WHITE}░M░i░n░i░ ░S░h░e░l░l░\033[0m"
 	@make -C libft/
-	@$(CC) -lreadline $^ libft/libft.a -o $@
+	@$(CC) -lreadline libft/libft.a $^ -o $@
 	@echo "${GREEN}all${RESET}"
 
 %.o: %.c

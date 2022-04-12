@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 char **split_path(char *string)
 {
     char **path;
@@ -11,8 +10,6 @@ char **split_path(char *string)
     path = ft_split(string,':');
     return path;
 }
-
-
 
 char *return_path(char **envp)
 {
@@ -28,7 +25,6 @@ char *return_path(char **envp)
     }
     return path;
 }
-
 
 char *concatenate_string(char *original, char *add)
 {
@@ -52,7 +48,3 @@ char *concatenate_string(char *original, char *add)
    alloc1[j] = '\0';
    return alloc1;
 }
-
-
-
-

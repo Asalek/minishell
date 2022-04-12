@@ -74,7 +74,7 @@ size_t	count_words(char const *s, char c);
 // int	ft_atoi(const char *str);
 // int	ft_isprint(int c);
 
-void	cd(char *str);
+void	cd(char *str, char **envp);
 void	*pwd();
 void	ft_exit();
 void	ft_echo(char **str);

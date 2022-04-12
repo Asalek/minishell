@@ -1,8 +1,23 @@
 #include "minishell.h"
 
-void	cd(char *str)
+void	cd(char *str, char **envp)
 {
-	if (chdir(str) != 0)
+	int	i;
+	char	*path;
+
+	i = 0;
+	if (!str)
+	{
+		while (envp[i])
+    	{
+    	    if(ft_strnstr(envp[i],"HOME=",ft_strlen(envp[i])) != 0)
+    	        path = ft_substr(envp[i],5,ft_strlen(envp[i]));
+    	    i++;
+    	}
+		if (chdir(path) != 0)
+			printf("cd: HOME not set");
+	}
+	else if (chdir(str) != 0)
 		printf("cd: no such file or directory: %s", str);
 }
 

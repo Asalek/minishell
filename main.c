@@ -4,7 +4,7 @@ int	built_in_functions(char **cmd, char **envp)
 {
 	if (!ft_strcmp(cmd[0], "cd"))
 	{
-		cd(cmd[1]);
+		cd(cmd[1], envp);
 		return (1);
 	}
 	if (!ft_strcmp(cmd[0], "pwd"))

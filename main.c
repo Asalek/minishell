@@ -81,12 +81,12 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
     while (1)
-        if((line = readline("\033[0;36mPhoenix>\033[0m\033[0;37m")) != NULL)
+        if((line = readline(">")) != NULL) //\033[0;36mPhoenix>\033[0m\033[0;37m
         {
 			if (ft_isprint(line[0]))
 				add_history(line);
             if(check_line(line,envp) == 0)
-				line = readline("\033[0;36mPhoenix>\033[0m\033[0;37m");
+				line = readline(">");
             else
                 free(line);
         }

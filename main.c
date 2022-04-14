@@ -80,14 +80,18 @@ int main(int argc, char **argv, char **envp)
     char *line;
 	(void)argc;
 	(void)argv;
+	t_list2	*list;
+	t_data	t;
+
+	list = creat_list(envp);
+	t.env_list = list;
+	t.envp = envp;
     while (1)
         if((line = readline(">")) != NULL) //\033[0;36mPhoenix>\033[0m\033[0;37m
         {
 			if (ft_isprint(line[0]))
 				add_history(line);
-            if(check_line(line,envp) == 0)
-				line = readline(">");
-            else
-                free(line);
+            check_line(line,t.envp);
         }
+    free(line);
 }

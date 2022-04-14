@@ -16,7 +16,7 @@
 typedef struct s_data
 {
 	char	**envp;
-	struct s_linkedlist	*list;
+	struct s_linkedlist	*env_list;
 }	t_data;
 
 typedef struct s_linkedlist
@@ -25,13 +25,6 @@ typedef struct s_linkedlist
 	char	*value;
 	struct s_linkedlist	*next;
 }	t_list2;
-
-typedef struct s_command
-{
-	char	*cmd;
-	char	*arg;
-	struct s_command	*next;
-}	t_command;
 
 
 
@@ -45,7 +38,7 @@ void init_func(char **envp);
 
 // end of excute commands
 
-
+t_list2	*creat_list(char **str);
 
 // start of split path
 char **split_path(char *string);

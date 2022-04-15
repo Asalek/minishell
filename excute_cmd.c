@@ -1,6 +1,4 @@
 #include "minishell.h"
-
-
  
 char *cmd_found(int count ,char **split_p,char *cmd)
 {
@@ -17,7 +15,6 @@ char *cmd_found(int count ,char **split_p,char *cmd)
         { 
             while ((entry = readdir(dir)) != NULL)
             {
-                // printf("")
                 if(ft_strcmp(entry->d_name, cmd) == 0)
                 {
                     return split_p[i];

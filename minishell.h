@@ -39,6 +39,8 @@ void init_func(char **envp);
 // end of excute commands
 
 t_list2	*creat_list(char **str);
+t_list2	*ft_lstneww(char *v_name, char *v_value);
+void	ft_lstadd_backk(t_list2 **lst, t_list2 *new);
 
 // start of split path
 char **split_path(char *string);
@@ -52,5 +54,7 @@ void	cd(char *str, char **envp);
 void	*pwd();
 void	ft_exit();
 void	ft_echo(char **str);
-void	ft_env(char **envp);
+void	ft_env(t_data *t);
+void	unset(char *arg, t_data *t);
+void	export(char *arg, t_data *t);
 #endif

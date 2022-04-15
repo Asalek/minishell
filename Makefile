@@ -25,7 +25,7 @@ endif
 NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRC = main.c check_path.c excute_cmd.c built_in.c libft.c creat_linked_list.c
+SRC = main.c check_path.c excute_cmd.c built_in.c libft.c create_linked_list.c
 OBJ = $(SRC:.c=.o)
 
 

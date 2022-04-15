@@ -43,14 +43,52 @@ void	ft_echo(char **str)
 		printf("%s\n", str[1]);
 }
 
-void	ft_env(char **envp)
+void	ft_env(t_data *t)
 {
-	int	i;
+	t_list2 *node;
+	node = t->env_list;
 
-	i = 0;
-	while (envp[i])
+	while (node)
 	{
-		printf("%s\n", envp[i]);
-		i++;
+		printf("%s=%s\n", node->name, node->value);
+		node = node->next;
+	}
+}
+
+void	export(char *arg, t_data *t)
+{
+	int		i;
+	char	**splited;
+	t_list2 *p;
+	t_list2 *node;
+
+	node = t->env_list;
+	i = 0;
+	if (!arg)
+	{
+		while (node)
+		{
+			printf("declare -x %s=%s\n", node->name, node->value);
+			node = node->next;
+		}
+	}
+	else
+	{
+		splited = ft_split(arg, '=');
+		p = ft_lstneww(splited[0], splited[1]);
+		ft_lstadd_backk(&t->env_list, p);
+	}
+}
+
+void	unset(char *arg, t_data *t)
+{
+	t_list2 *node;
+
+	node = t->env_list;
+	while (node)
+	{
+		if (!ft_strcmp(node->next->name, arg))
+			node->next = node->next->next;
+		node = node->next;
 	}
 }

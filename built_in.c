@@ -15,10 +15,10 @@ void	cd(char *str, char **envp)
     	    i++;
     	}
 		if (chdir(path) != 0)
-			printf("cd: HOME not set");
+			printf("cd: HOME not set\n");
 	}
 	else if (chdir(str) != 0)
-		printf("cd: no such file or directory: %s", str);
+		printf("cd: no such file or directory: %s\n", str);
 }
 
 void	*pwd()

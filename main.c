@@ -59,13 +59,17 @@ void handl_line(char *cmd,t_data *t)
     path = return_path(t->envp);
     count = count_words(path,':');
     split_p = split_path(path);
-    
     char **cmd_split = ft_split(cmd,' ');
 
 	if (built_in_functions(cmd_split, t))
 		return ;
     else if ((full_path = cmd_found(count,split_p,cmd_split[0])) == 0)
-        printf("COMMAND NOT FOUND\n");
+	{
+		if (!full_path)
+			printf("command doesn't exist you may delete Path!\n");
+        else
+			printf("COMMAND NOT FOUND\n");
+	}
     else
     {
         full_path = concatenate_string(full_path, "/");		

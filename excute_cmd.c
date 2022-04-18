@@ -10,7 +10,7 @@ char *cmd_found(int count ,char **split_p,char *cmd)
     while (i < count)
     {
         if ((dir = opendir(split_p[i])) == NULL)
-            printf("ERROR");
+			return (NULL);
         else
         { 
             while ((entry = readdir(dir)) != NULL)
@@ -24,7 +24,7 @@ char *cmd_found(int count ,char **split_p,char *cmd)
         closedir(dir);
         i++;
     }
-    return 0;
+    return (0);
 }
 
 

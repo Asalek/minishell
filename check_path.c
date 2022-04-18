@@ -23,6 +23,8 @@ char *return_path(char **envp)
             path = ft_substr(envp[i],5,ft_strlen(envp[i]));// in mac PATH=/usr
         i++;
     }
+	if (!path)
+		return (NULL);
     return path;
 }
 

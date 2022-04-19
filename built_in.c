@@ -85,6 +85,12 @@ void	unset(char *arg, t_data *t)
 	t_list2 *node;
 
 	node = t->env_list;
+	if (node && !node->next)
+	{
+		free(node);
+		t->env_list = NULL;
+		return ;
+	}
 	while (node)
 	{
 		if (!ft_strcmp(node->next->name, arg))

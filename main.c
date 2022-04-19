@@ -65,10 +65,7 @@ void handl_line(char *cmd,t_data *t)
 		return ;
     else if ((full_path = cmd_found(count,split_p,cmd_split[0])) == 0)
 	{
-		if (!full_path)
-			printf("command doesn't exist you may delete Path!\n");
-        else
-			printf("COMMAND NOT FOUND\n");
+		printf("COMMAND NOT FOUND\n");
 	}
     else
     {

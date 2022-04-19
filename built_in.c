@@ -55,6 +55,23 @@ void	ft_env(t_data *t)
 	}
 }
 
+int	is_in_node(t_list2 *t, char *name, char *arg)
+{
+	t_list2	*p;
+
+	p = t;
+	while (p)
+	{
+		if (!ft_strcmp(p->name, name))
+		{
+			p->value = arg;
+			return (1);
+		}
+		p = p->next;
+	}
+	return (0);
+}
+
 void	export(char *arg, t_data *t)
 {
 	int		i;
@@ -75,6 +92,8 @@ void	export(char *arg, t_data *t)
 	else
 	{
 		splited = ft_split(arg, '=');
+		if (is_in_node(t->env_list, splited[0], splited[1]))
+			return ;
 		p = ft_lstneww(splited[0], splited[1]);
 		ft_lstadd_backk(&t->env_list, p);
 	}

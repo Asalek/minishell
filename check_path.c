@@ -19,7 +19,7 @@ char *return_path(char **envp)
     i = 0;
     while (envp[i])
     {
-        if(ft_strnstr(envp[i],"PATH=/usr",ft_strlen(envp[i])) != 0)// in mac PATH=/usr
+        if(ft_strnstr(envp[i],"PATH=",ft_strlen(envp[i])) != 0)// in mac PATH=/usr
             path = ft_substr(envp[i],5,ft_strlen(envp[i]));// in mac PATH=/usr
         i++;
     }

@@ -131,8 +131,11 @@ void	unset(char *arg, t_data *t)
 	}
 	while (node)
 	{
-		if (!ft_strcmp(node->next->name, arg))
-			node->next = node->next->next;
+		if (node->next)
+		{		
+			if (!ft_strcmp(node->next->name, arg))
+				node->next = node->next->next;
+		}
 		node = node->next;
 	}
 	exit_status = 0;

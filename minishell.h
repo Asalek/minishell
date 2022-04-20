@@ -12,8 +12,10 @@ int	exit_status;
 #include <dirent.h>
 #include <sys/types.h>
 #include <string.h>
+#include <signal.h>
 #include "libft/libft.h"
 
+#define PROMPT "\033[0;36mPhoenix>\033[0m\033[0;37m"
 
 typedef struct s_data
 {

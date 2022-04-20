@@ -100,6 +100,12 @@ int check_line(char *str,t_data *t)
     return 1;
 }
 
+void	exit_shell(int a)
+{
+	(void)a;
+	return ;
+}
+
 int main(int argc, char **argv, char **envp)
 {
     char *line;
@@ -111,12 +117,14 @@ int main(int argc, char **argv, char **envp)
 	list = creat_list(envp);
 	t.envp = envp;
 	t.env_list = list;
-    while (1)
-        if((line = readline(">")) != NULL) //\033[0;36mPhoenix>\033[0m\033[0;37m
-        {
-			if (ft_isprint(line[0]))
-				add_history(line);
-            check_line(line,&t);
-    		free(line);
-        }
+	line = readline(">");//\033[0;36mPhoenix>\033[0m\033[0;37m
+    while (line)
+	{
+		signal(2, exit_shell);
+		if (ft_isprint(line[0]))
+			add_history(line);
+		check_line(line,&t);
+		free(line);
+		line = readline(">");
+	}
 }

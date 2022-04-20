@@ -1,6 +1,7 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
+int	exit_status;
 
 
 #include <unistd.h>
@@ -12,6 +13,7 @@
 #include <sys/types.h>
 #include <string.h>
 #include "libft/libft.h"
+
 
 typedef struct s_data
 {

@@ -66,6 +66,7 @@ void handl_line(char *cmd,t_data *t)
     else if ((full_path = cmd_found(count,split_p,cmd_split[0])) == 0)
 	{
 		printf("COMMAND NOT FOUND\n");
+		exit_status = 127;
 	}
     else
     {

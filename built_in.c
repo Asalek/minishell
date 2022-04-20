@@ -15,7 +15,10 @@ void	cd(char *str, char **envp)
     	    i++;
     	}
 		if (chdir(path) != 0)
+		{
 			printf("cd: HOME not set\n");
+			exit_status = 1;
+		}
 	}
 	else if (chdir(str) != 0)
 		printf("cd: no such file or directory: %s\n", str);
@@ -27,6 +30,7 @@ void	*pwd()
 
 	str = malloc(100);
 	str = getcwd(str, 100);
+	exit_status = 0;
 	return (str);
 }
 
@@ -37,10 +41,16 @@ void	ft_exit()
 
 void	ft_echo(char **str)
 {
-	if (str[1][0] == '-' && str[1][1] == 'n' && str[1][2] == '\0')
+	if (!ft_strcmp(str[1], "$?"))
+	{
+		printf("%d\n", exit_status);
+		exit_status = 0;
+	}
+	else if (str[1][0] == '-' && str[1][1] == 'n' && str[1][2] == '\0')
 		printf("%s", str[2]);
 	else
 		printf("%s\n", str[1]);
+	exit_status = 0;
 }
 
 void	ft_env(t_data *t)
@@ -53,6 +63,7 @@ void	ft_env(t_data *t)
 		printf("%s=%s\n", node->name, node->value);
 		node = node->next;
 	}
+	exit_status= 0;
 }
 
 int	is_in_node(t_list2 *t, char *name, char *arg)
@@ -65,10 +76,12 @@ int	is_in_node(t_list2 *t, char *name, char *arg)
 		if (!ft_strcmp(p->name, name))
 		{
 			p->value = arg;
+			exit_status = 0;
 			return (1);
 		}
 		p = p->next;
 	}
+	exit_status = 1;
 	return (0);
 }
 
@@ -80,6 +93,8 @@ void	export(char *arg, t_data *t)
 	t_list2 *node;
 
 	node = t->env_list;
+	p = NULL;
+	exit_status = 0;
 	i = 0;
 	if (!arg)
 	{
@@ -116,4 +131,5 @@ void	unset(char *arg, t_data *t)
 			node->next = node->next->next;
 		node = node->next;
 	}
+	exit_status = 0;
 }

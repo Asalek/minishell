@@ -62,8 +62,12 @@ void handl_line(char *cmd,t_data *t)
     count = count_words(path,':');
     split_p = split_path(path);
     cmd_split = ft_split(cmd,' ');
+	while (*cmd == ' ')
+		cmd++;
 	if (built_in_functions(cmd_split, t))
 		return ;
+	else if (!strncmp("/", cmd, 1))
+		execut_cmd("", cmd_split, cmd);
 	else if (!strncmp("./", cmd, 2))
 		execut_cmd("", cmd_split, cmd);
     else if ((full_path = cmd_found(count,split_p,cmd_split[0])) == 0)

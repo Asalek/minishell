@@ -52,13 +52,7 @@ void execut_cmd(char *path,char **cmd,char *command)
 		exit(0);
 	}
     else
-	{
         wait(&i);
-		if (WIFEXITED(i))
-		{
-			exit_status = WEXITSTATUS(i);
-		}
-		
-	}
+	exit_status = WEXITSTATUS(i);
 }
 

@@ -5,6 +5,7 @@ void	cd(char *str, char **envp)
 	int	i;
 	char	*path;
 
+	exit_status = 0;
 	i = 0;
 	if (!str)
 	{
@@ -21,7 +22,10 @@ void	cd(char *str, char **envp)
 		}
 	}
 	else if (chdir(str) != 0)
+	{
 		printf("cd: no such file or directory: %s\n", str);
+		exit_status = 1;
+	}
 }
 
 void	*pwd()
@@ -92,9 +96,9 @@ void	export(char *arg, t_data *t)
 	t_list2 *p;
 	t_list2 *node;
 
+	exit_status = 0;
 	node = t->env_list;
 	p = NULL;
-	exit_status = 0;
 	i = 0;
 	if (!arg)
 	{

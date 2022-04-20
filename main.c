@@ -12,6 +12,7 @@ int	more_built_in(char **cmd, t_data *t)
 		if (!cmd[1])
 		{
 			printf("unset: not enough arguments\n");
+			exit_status = 1;
 			return (1);
 		}
 		unset(cmd[1], t);

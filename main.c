@@ -56,14 +56,16 @@ void handl_line(char *cmd,t_data *t)
     char **split_p;
     int count;
     char *full_path;
+	char **cmd_split;
 
     path = return_path(t->envp);
     count = count_words(path,':');
     split_p = split_path(path);
-    char **cmd_split = ft_split(cmd,' ');
-
+    cmd_split = ft_split(cmd,' ');
 	if (built_in_functions(cmd_split, t))
 		return ;
+	else if (!strncmp("./", cmd, 2))
+		execut_cmd("", cmd_split, cmd);
     else if ((full_path = cmd_found(count,split_p,cmd_split[0])) == 0)
 	{
 		printf("COMMAND NOT FOUND\n");

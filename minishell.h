@@ -20,6 +20,7 @@ int	exit_status;
 typedef struct s_data
 {
 	char	**envp;
+	int		id;
 	struct s_linkedlist	*env_list;
 }	t_data;
 

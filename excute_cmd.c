@@ -48,11 +48,10 @@ void execut_cmd(char *path,char **cmd,char *command)
     i = fork();
     if (i == 0)
 	{
-        execve(full_path, parmList, NULL);
-		exit(0);
+        if (execve(full_path, parmList, NULL) == -1)
+			exit(0);
 	}
     else
         wait(&i);
 	exit_status = WEXITSTATUS(i);
 }
-

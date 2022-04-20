@@ -45,7 +45,9 @@ void	ft_exit()
 
 void	ft_echo(char **str)
 {
-	if (!ft_strcmp(str[1], "$?"))
+	if (!str[1])
+		printf("\n");	
+	else if (!ft_strcmp(str[1], "$?"))
 	{
 		printf("%d\n", exit_status);
 		exit_status = 0;

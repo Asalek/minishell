@@ -38,7 +38,7 @@ typedef struct s_linkedlist
 
 // int check_line(char *str,char **envp);
 char *cmd_found(int count ,char **split_p,char *cmd);
-void execut_cmd(char *path,char **cmd,char *command);
+void execut_cmd(char *path,char **cmd,char *command, t_data *t);
 void init_func(char **envp);
 
 // end of excute commands

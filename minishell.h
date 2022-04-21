@@ -20,7 +20,6 @@ int	exit_status;
 typedef struct s_data
 {
 	char	**envp;
-	int		id;
 	struct s_linkedlist	*env_list;
 }	t_data;
 
@@ -31,10 +30,46 @@ typedef struct s_linkedlist
 	struct s_linkedlist	*next;
 }	t_list2;
 
+typedef struct echo_parssing{
+
+    int i;
+    int len;
+    int j;
+    int t;
+    int r;
+    int y;
+    int l;
+    char **alloc;
+    char **parssing;
+    char *line;
+
+}t_echo;
 
 
-// start of excute commands
 
+// start of handle redairection
+
+
+void hendl_two(char *line,int i);
+void hendl_one(char *line,int i);
+void redairection_1(t_echo *e);
+// end of handle redairection
+
+
+// start of check syntax of command
+char* line_handle(char *line,t_echo *e,t_data *t);
+
+int check_if_is_echo(char *line);
+
+int check_3(char *line,t_echo *e);
+int check_2(char *line,t_echo *e,int i);
+int check_1(char *line,t_echo *e);
+int redairection_handle(char *line);
+int check_qouts_echo(char *line,t_echo *e);
+int hendl_1(char *str,int i);
+int check_qouts(char *line,t_echo *e);
+
+// end of check syntax of command
 
 // int check_line(char *str,char **envp);
 char *cmd_found(int count ,char **split_p,char *cmd);
@@ -46,6 +81,13 @@ void init_func(char **envp);
 t_list2	*creat_list(char **str);
 t_list2	*ft_lstneww(char *v_name, char *v_value);
 void	ft_lstadd_backk(t_list2 **lst, t_list2 *new);
+
+int	more_built_in(char **cmd, t_data *t);
+int	built_in_functions(char **cmd, t_data *t);
+void handl_line(char *cmd,t_data *t);
+
+
+
 
 // start of split path
 char **split_path(char *string);

@@ -50,6 +50,25 @@ int	built_in_functions(char **cmd, t_data *t)
 		return more_built_in(cmd, t);
 }
 
+void	check_quots(char *cmd)
+{
+	int		i;
+	char	c;
+
+	i = 0;
+	if (*cmd == '\"' || *cmd == '\'')
+	{
+		while (cmd[i])
+		{		
+			c = cmd[i + 1];
+			cmd[i] = c;
+			i++;
+		}
+		i--;
+		cmd[i - 1] = '\0';		
+	}
+}
+
 void handl_line(char *cmd,t_data *t)
 {
     char *path;
@@ -66,9 +85,9 @@ void handl_line(char *cmd,t_data *t)
 		cmd++;
 	if (built_in_functions(cmd_split, t))
 		return ;
-	else if (!strncmp("/", cmd, 1))
-		execut_cmd("", cmd_split, cmd, t);
 	else if (!strncmp("./", cmd, 2))
+		execut_cmd("", cmd_split, cmd, t);
+	else if (!strncmp("/", cmd, 1))
 		execut_cmd("", cmd_split, cmd, t);
     else if ((full_path = cmd_found(count,split_p,cmd_split[0])) == 0)
 	{
@@ -82,27 +101,15 @@ void handl_line(char *cmd,t_data *t)
     }
 }
 
-int check_line(char *str,t_data *t)
+int check_line(char *str,t_data *t,t_echo *e)
 {
-    int i;
-    
-    i = 0;
-    while (str[i])
-    {
-        if (str[i] == '\'')
-        {
-            return 0;
-        }
-        else if(str[i] == '"')
-        {
-            return 0;
-        }
-        i++;
-    }
-    if (i == 0)
+    e->l = 0;
+    e->i = 0;
+	if (ft_strlen(str) < 1)
+		return (0);
+	check_quots(str);
+    if(line_handle(str,e,t) == NULL)
         return 0;
-    
-    handl_line(str,t);
     return 1;
 }
 
@@ -119,6 +126,8 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	t_list2	*list;
 	t_data	t;
+	t_echo strc;
+    t_echo *e = &strc;
 
 	list = creat_list(envp);
 	t.envp = envp;
@@ -129,7 +138,7 @@ int main(int argc, char **argv, char **envp)
 		signal(2, exit_shell);
 		if (ft_isprint(line[0]))
 			add_history(line);
-		check_line(line,&t);
+		check_line(line,&t,e);
 		free(line);
 		line = readline(">");
 	}

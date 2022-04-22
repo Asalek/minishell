@@ -38,7 +38,7 @@ int	built_in_functions(char **cmd, t_data *t)
 		ft_exit();
 	if (!ft_strcmp(cmd[0], "echo"))
 	{
-		ft_echo(cmd);
+		ft_echo(cmd, t);
 		return (1);
 	}
 	if (!ft_strcmp(cmd[0], "env"))
@@ -132,7 +132,7 @@ int main(int argc, char **argv, char **envp)
 	list = creat_list(envp);
 	t.envp = envp;
 	t.env_list = list;
-	line = readline(">");//\033[0;36mPhoenix>\033[0m\033[0;37m
+	line = readline(PROMPT);//\033[0;36mPhoenix>\033[0m\033[0;37m
     while (line)
 	{
 		signal(2, exit_shell);
@@ -140,6 +140,6 @@ int main(int argc, char **argv, char **envp)
 			add_history(line);
 		check_line(line,&t,e);
 		free(line);
-		line = readline(">");
+		line = readline(PROMPT);
 	}
 }

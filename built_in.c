@@ -43,19 +43,38 @@ void	ft_exit()
 	exit(0);
 }
 
-void	ft_echo(char **str)
+void	ft_echo(char **str, t_data *t)
 {
 	if (!str[1])
-		printf("\n");	
-	else if (!ft_strcmp(str[1], "$?"))
+		printf("\n");
+	else if (has_quotes(str[1]) == 1)
 	{
-		printf("%d\n", exit_status);
-		exit_status = 0;
+		check_quots(str[1]);
+		printf("%s\n", str[1]);
+	}
+	else if (has_quotes(str[1]) == 2)
+	{
+		check_quots(str[1]);
+		if (!strncmp(str[1], "$", 1))
+		{
+			str[1]++;		
+			printf("%s\n", replace_arg_env(str[1], t));
+		}
+		else
+			printf("%s\n", str[1]);
 	}
 	else if (str[1][0] == '-' && str[1][1] == 'n' && str[1][2] == '\0')
 		printf("%s", str[2]);
 	else
-		printf("%s\n", str[1]);
+	{
+		if (!ft_strncmp(str[1], "$", 1))
+		{
+			str[1]++;
+			printf("%s\n", replace_arg_env(str[1], t));
+		}
+		else
+			printf("%s\n", str[1]);
+	}
 	exit_status = 0;
 }
 

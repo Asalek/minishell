@@ -75,6 +75,7 @@ int check_qouts(char *line,t_echo *e);
 char *cmd_found(int count ,char **split_p,char *cmd);
 void execut_cmd(char *path,char **cmd,char *command, t_data *t);
 void init_func(char **envp);
+void	check_quots(char *cmd);
 
 // end of excute commands
 
@@ -85,9 +86,8 @@ void	ft_lstadd_backk(t_list2 **lst, t_list2 *new);
 int	more_built_in(char **cmd, t_data *t);
 int	built_in_functions(char **cmd, t_data *t);
 void handl_line(char *cmd,t_data *t);
-
-
-
+int	has_quotes(char *str);
+char	*replace_arg_env(char *str, t_data *t);
 
 // start of split path
 char **split_path(char *string);
@@ -100,7 +100,7 @@ size_t	count_words(char const *s, char c);
 void	cd(char *str, char **envp);
 void	*pwd();
 void	ft_exit();
-void	ft_echo(char **str);
+void	ft_echo(char **str, t_data *t);
 void	ft_env(t_data *t);
 void	unset(char *arg, t_data *t);
 void	export(char *arg, t_data *t);

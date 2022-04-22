@@ -29,5 +29,5 @@ char	*replace_arg_env(char *str, t_data *t)
 			return (p->value);
 		p = p->next;
 	}
-	return ("\n");
+	return ("");
 }

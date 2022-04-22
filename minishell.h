@@ -53,7 +53,6 @@ typedef struct echo_parssing{
 void hendl_two(char *line,int i);
 void hendl_one(char *line,int i);
 void redairection_1(t_echo *e);
-// end of handle redairection
 
 
 // start of check syntax of command
@@ -69,9 +68,10 @@ int check_qouts_echo(char *line,t_echo *e);
 int hendl_1(char *str,int i);
 int check_qouts(char *line,t_echo *e);
 
-// end of check syntax of command
+int	has_quotes(char *str);
+char	*replace_arg_env(char *str, t_data *t);
 
-// int check_line(char *str,char **envp);
+
 char *cmd_found(int count ,char **split_p,char *cmd);
 void execut_cmd(char *path,char **cmd,char *command, t_data *t);
 void init_func(char **envp);
@@ -82,12 +82,9 @@ void	check_quots(char *cmd);
 t_list2	*creat_list(char **str);
 t_list2	*ft_lstneww(char *v_name, char *v_value);
 void	ft_lstadd_backk(t_list2 **lst, t_list2 *new);
-
 int	more_built_in(char **cmd, t_data *t);
 int	built_in_functions(char **cmd, t_data *t);
 void handl_line(char *cmd,t_data *t);
-int	has_quotes(char *str);
-char	*replace_arg_env(char *str, t_data *t);
 
 // start of split path
 char **split_path(char *string);
@@ -96,6 +93,8 @@ char *return_path(char **envp);
 // libft
 char *concatenate_string(char *original, char *add);
 size_t	count_words(char const *s, char c);
+
+//built-in functions
 
 void	cd(char *str, char **envp);
 void	*pwd();

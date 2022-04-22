@@ -103,8 +103,17 @@ void handl_line(char *cmd,t_data *t)
 
 int check_line(char *str,t_data *t,t_echo *e)
 {
+	char	*cmd;
+
     e->l = 0;
     e->i = 0;
+	if (!strncmp(str, "$", 1))
+	{
+		str++;
+		cmd = replace_arg_env(str, t);
+		handl_line(cmd, t);
+		return (0);
+	}
 	if (ft_strlen(str) < 1)
 		return (0);
 	check_quots(str);
@@ -132,7 +141,7 @@ int main(int argc, char **argv, char **envp)
 	list = creat_list(envp);
 	t.envp = envp;
 	t.env_list = list;
-	line = readline(PROMPT);//\033[0;36mPhoenix>\033[0m\033[0;37m
+	line = readline(PROMPT);
     while (line)
 	{
 		signal(2, exit_shell);

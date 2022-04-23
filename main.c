@@ -81,6 +81,8 @@ void handl_line(char *cmd,t_data *t)
     count = count_words(path,':');
     split_p = split_path(path);
     cmd_split = ft_split(cmd,' ');
+	if (!cmd || !ft_strncmp(cmd, "", 1))
+		return ;	
 	while (*cmd == ' ')
 		cmd++;
 	if (built_in_functions(cmd_split, t))
@@ -131,13 +133,12 @@ void	exit_shell(int a)
 int main(int argc, char **argv, char **envp)
 {
     char *line;
-	(void)argc;
-	(void)argv;
 	t_list2	*list;
 	t_data	t;
 	t_echo strc;
     t_echo *e = &strc;
 
+	ft_strnstr(argv[0], ft_itoa(argc), 2);
 	list = creat_list(envp);
 	t.envp = envp;
 	t.env_list = list;

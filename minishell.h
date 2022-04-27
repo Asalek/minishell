@@ -21,6 +21,8 @@ typedef struct s_data
 {
 	char	**envp;
 	struct s_linkedlist	*env_list;
+	int	bool_fd;
+	int	fd[2];
 }	t_data;
 
 typedef struct s_linkedlist
@@ -61,8 +63,8 @@ char* line_handle(char *line,t_echo *e,t_data *t);
 int check_if_is_echo(char *line);
 
 int check_3(char *line,t_echo *e);
-int check_2(char *line,t_echo *e,int i);
-int check_1(char *line,t_echo *e);
+int check_2(char *line,t_echo *e,int i, t_data *t);
+int check_1(char *line,t_echo *e, t_data *t);
 int redairection_handle(char *line);
 int check_qouts_echo(char *line,t_echo *e);
 int hendl_1(char *str,int i);
@@ -85,6 +87,8 @@ void	ft_lstadd_backk(t_list2 **lst, t_list2 *new);
 int	more_built_in(char **cmd, t_data *t);
 int	built_in_functions(char **cmd, t_data *t);
 void handl_line(char *cmd,t_data *t);
+void	Pipe_hundler(t_echo *e, t_data *t);
+void	pipee(t_echo *e, t_data *t);
 
 // start of split path
 char **split_path(char *string);

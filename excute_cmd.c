@@ -48,7 +48,7 @@ void execut_cmd(char *path,char **cmd,char *command, t_data *t)
     i = fork();
     if (i == 0)
 	{
-        if (execve(full_path, parmList, t->envp) == -1)
+		if (execve(full_path, parmList, t->envp) == -1)
 			exit(0);
 	}
     else

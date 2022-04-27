@@ -54,9 +54,12 @@ void	check_quots(char *cmd)
 {
 	int		i;
 	char	c;
+	int		len;
 
+	len=ft_strlen(cmd);
 	i = 0;
-	if (*cmd == '\"' || *cmd == '\'')
+	if ((*cmd == '\"' && cmd[len - 1] == '\"') 
+		|| (*cmd == '\'' && cmd[len - 1] == '\''))
 	{
 		while (cmd[i])
 		{		

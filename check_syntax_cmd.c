@@ -26,7 +26,7 @@ int check_3(char *line,t_echo *e)
     return 1;
 }
 
-int check_2(char *line,t_echo *e,int i)
+int check_2(char *line,t_echo *e,int i, t_data *t)
 {
     e->parssing = ft_split(line,'|');
     while (e->parssing[i])
@@ -49,15 +49,20 @@ int check_2(char *line,t_echo *e,int i)
         }
         i++;
     }
+	e->len = 0;
+	while (e->parssing[e->len])
+		e->len++;
+	if (e->len > 1)
+		pipee(e, t);//Pipe_hundler(e, t);
     return 1;
 
 }
 
-int check_1(char *line,t_echo *e)
+int check_1(char *line,t_echo *e, t_data *t)
 { 
     if (ft_strnstr(line,"|",ft_strlen(line)))
     {
-        if(check_2(line,e,0) == 0)
+        if(check_2(line, e, 0, t) == 0)
             return 0;
         else
             return 1;
@@ -96,7 +101,7 @@ int redairection_handle(char *line)
 char* line_handle(char *line,t_echo *e,t_data *t)
 {
     int i;
-    if (check_1(line,e) == 0)
+    if (check_1(line,e, t) == 0)
         return 0;
     i = 0;
     if (ft_strnstr(line,"|",ft_strlen(line)))

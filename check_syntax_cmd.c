@@ -53,8 +53,8 @@ int check_2(char *line,t_echo *e,int i, t_data *t)
 	while (e->parssing[e->len])
 		e->len++;
 	if (e->len > 1)
-		Pipe_hundler(e, t);
-		//pipee(e, t);//
+		pipee(e, t);
+		//Pipe_hundler(e, t);
     return 1;
 
 }

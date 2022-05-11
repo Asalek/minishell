@@ -55,48 +55,101 @@ void handl_linee(char *cmd,t_data *t)
         execut_cmdd(full_path,cmd_split,cmd, t);
     }
 }
-/*
-void	pipee(t_echo *e, t_data *t)
+
+
+int count(char **cmd)
 {
+	int i;
+	i = 0;
+	while (cmd[i])
+		i++;
+	return i;
+}
+
+void pipee(t_echo *e, t_data *t)
+{
+	int		x = 0;
+	pid_t	pid;
+	int		cmd_len = count(e->parssing);
+	int		fd[2*cmd_len];
+
 	e->i = 0;
 	e->j = 0;
-	while (e->parssing[e->i])
+	while(e->i < cmd_len){
+        if(pipe(fd + e->i*2) < 0)
+		{
+            perror("couldn't pipe");
+            exit(EXIT_FAILURE);
+        }
 		e->i++;
-	int *id = malloc(e->i * sizeof(int));
-	while (e->parssing[e->j])
+    }
+	while (e->parssing[x] != NULL)
 	{
-		if (pipe(t->fd) == -1)
-			return ;
-		id[e->j] = fork();
-		if(id[e->j] == 0)
+
+		if ((pid = fork()) == -1)
 		{
-			if (e->parssing[e->j + 1])
-			{
-				dup2(t->fd[1], 1);
-				dup2(t->fd[0], 0);
-				// close(t->fd[0]);
-				// close(t->fd[1]);
-				handl_linee(e->parssing[e->j], t);
-			}
-			else
-			{
-				dup2(t->fd[0], 0);
-				// close(t->fd[0]);
-				// close(t->fd[1]);
-				handl_linee(e->parssing[e->j], t);
-			}
+			perror("fork");
+			exit(1);
 		}
-		else
+		else if (pid == 0)
 		{
-			close(t->fd[0]);
-			close(t->fd[1]);
-			wait(NULL);
+			if (e->parssing[x + 1] != NULL)
+			{
+				if(dup2(fd[e->j + 1], 1) < 0)
+					perror("dup2");
+			}
+			if (e->j != 0)
+			{
+				if(dup2(fd[e->j - 2], 0) < 0)
+				{	
+                    perror("dup");
+				}
+			}
+			for(e->i = 0; e->i < 2 * cmd_len; e->i++){
+                close(fd[e->i]);
+            }
+			handl_linee(e->parssing[x], t);
 		}
-		e->j++;
+		x++;
+		e->j += 2;
 	}
-	
+	for(e->i = 0; e->i < 2 * cmd_len; e->i++)
+	{
+        close(fd[e->i]);
+    }
+    for(e->i = 0; e->i < cmd_len; e->i++)
+        wait(NULL);
 }
-*/
+
+/*
+
+void	exec_first(char *e, t_data *t, int *fd)
+{
+	dup2(fd[1], 1);
+	close(fd[0]);
+	close(fd[1]);
+	handl_linee(e, t);
+}
+void	exec_mid(char *e, t_data *t, int *fd, int *fd2)
+{
+	dup2(fd2[0], 0);
+	dup2(fd[1], 1);
+	close(fd2[0]);
+	close(fd2[1]);
+	close(fd[0]);
+	close(fd[1]);
+	handl_linee(e, t);
+}
+void	exec_last(char *e, t_data *t,int *fd , int *fd2)
+{
+	dup2(fd2[0], 0);
+	close(fd2[0]);
+	close(fd2[1]);
+	close(fd[0]);
+	close(fd[1]);
+	handl_linee(e, t);
+}
+
 void	pipee(t_echo *e, t_data *t)
 {
 	int	i = 0;
@@ -104,7 +157,7 @@ void	pipee(t_echo *e, t_data *t)
 
 	while (e->parssing[i])
 		i++;
-	int fd[i - 1][2];
+	int fd[i][2];
 	int	id[i];
 	while (e->parssing[j])
 	{
@@ -112,19 +165,28 @@ void	pipee(t_echo *e, t_data *t)
 		id[j] = fork();
 		if (id[j] == 0)
 		{
-			if (j != 0)
-				dup2(fd[j - 1][0], 0);
-			dup2(fd[j][1], 1);
-			close(fd[j][0]);
-			close(fd[j][1]);
-			handl_linee(e->parssing[j], t);
-		}
-		else
-		{
-			close(fd[j][0]);
-			close(fd[j][1]);
-			wait(NULL);
+			if (j == 0)
+				exec_first(e->parssing[j], t, fd[j]);
+			else if (j < i - 1)
+				exec_mid(e->parssing[j], t, fd[j], fd[j - 1]);
+			else
+				exec_last(e->parssing[j], t, fd[j] , fd[j - 1]);
 		}
 		j++;
 	}
+	int f = i;
+	int ff = 0;
+	while (ff != i)
+	{
+		close(fd[ff][0]);
+		close(fd[ff][1]);
+		ff++;
+	}
+	while (f != 0)
+	{
+		wait(NULL);
+		f--;
+	}
+	
 }
+*/

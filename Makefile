@@ -26,7 +26,7 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 SRC = main.c check_path.c excute_cmd.c built_in.c libft.c create_linked_list.c check_syntax_cmd.c handle_redairection.c if_is_echo.c cmd_syntax_2.c check_operators.c \
-quotes.c pipe.c
+quotes.c pipee.c
 OBJ = $(SRC:.c=.o)
 
 

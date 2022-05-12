@@ -39,7 +39,7 @@ void handl_linee(char *cmd,t_data *t)
 	while (*cmd == ' ')
 		cmd++;
 	if (built_in_functions(cmd_split, t))
-		return ;
+		exit(0);
 	else if (!strncmp("./", cmd, 2))
 		execut_cmdd("", cmd_split, cmd, t);
 	else if (!strncmp("/", cmd, 1))

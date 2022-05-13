@@ -1,41 +1,48 @@
 #include"minishell.h"
 
-void execut_cmdd(char *path,char **cmd,char *command, t_data *t)
+void	command_not_found(void)
 {
-    char *full_path;
-    int word_count;
-    int i;
-    char **parmList;
+	printf("COMMAND NOT FOUND\n");
+	exit_status = 127;
+	exit(0);
+}
 
-    full_path = ft_strjoin(path,cmd[0]);
-    word_count = count_words(command,' ');// ls -l
-    i = 0;
-    parmList = malloc(sizeof(char*) * word_count + 1);
-    while (i < word_count)
-    {
-        parmList[i] = cmd[i];
-		check_quots(parmList[i]);
-        i++;
-    }
-    parmList[i] = NULL;
-    if (execve(full_path, parmList, t->envp) == -1)
+void	execut_cmdd(char *path, char **cmd, char *command, t_data *t)
+{
+	char	*full_path;
+	char	**parmlist;
+	int		word_count;
+	int		i;
+
+	full_path = ft_strjoin(path, cmd[0]);
+	word_count = count_words(command, ' ');
+	i = 0;
+	parmlist = malloc(sizeof(char *) * word_count + 1);
+	while (i < word_count)
+	{
+		parmlist[i] = cmd[i];
+		check_quots(parmlist[i]);
+		i++;
+	}
+	parmlist[i] = NULL;
+	if (execve(full_path, parmlist, t->envp) == -1)
 		exit(0);
 }
 
-void handl_linee(char *cmd,t_data *t)
+void	handl_linee(char *cmd, t_data *t)
 {
-    char *path;
-    char **split_p;
-    int count;
-    char *full_path;
-	char **cmd_split;
+	char	*path;
+	char	**split_p;
+	char	*full_path;
+	char	**cmd_split;
 
-    path = return_path(t->envp);
-    count = count_words(path,':');
-    split_p = split_path(path);
-    cmd_split = ft_split(cmd,' ');
+	path = return_path(t->envp);
+	t->bool_fd = count_words(path, ':');
+	split_p = split_path(path);
+	cmd_split = ft_split(cmd, ' ');
+	full_path = cmd_found(t->bool_fd, split_p, cmd_split[0]);
 	if (!cmd || !ft_strncmp(cmd, "", 1))
-		return ;	
+		return ;
 	while (*cmd == ' ')
 		cmd++;
 	if (built_in_functions(cmd_split, t))
@@ -44,29 +51,24 @@ void handl_linee(char *cmd,t_data *t)
 		execut_cmdd("", cmd_split, cmd, t);
 	else if (!strncmp("/", cmd, 1))
 		execut_cmdd("", cmd_split, cmd, t);
-    else if ((full_path = cmd_found(count,split_p,cmd_split[0])) == 0)
-	{
-		printf("COMMAND NOT FOUND\n");
-		exit_status = 127;
-	}
-    else
-    {
-        full_path = concatenate_string(full_path, "/");		
-        execut_cmdd(full_path,cmd_split,cmd, t);
-    }
+	else if (full_path == 0)
+		command_not_found();
+	else
+		full_path = concatenate_string(full_path, "/");
+	execut_cmdd(full_path, cmd_split, cmd, t);
 }
 
-
-int count(char **cmd)
+int	count(char **cmd)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	while (cmd[i])
 		i++;
-	return i;
+	return (i);
 }
 
-void pipee(t_echo *e, t_data *t)
+void	pipee(t_echo *e, t_data *t)
 {
 	int		x = 0;
 	pid_t	pid;
@@ -76,7 +78,7 @@ void pipee(t_echo *e, t_data *t)
 	e->i = 0;
 	e->j = 0;
 	while(e->i < cmd_len){
-        if(pipe(fd + e->i*2) < 0)
+        if(pipe(fd + e->i * 2) < 0)
 		{
             perror("couldn't pipe");
             exit(EXIT_FAILURE);

@@ -29,6 +29,12 @@ int check_3(char *line,t_echo *e)
 int check_2(char *line,t_echo *e,int i, t_data *t)
 {
     e->parssing = ft_split(line,'|');
+	if (!ft_strncmp(e->parssing[0], "", 1) || !ft_strncmp(e->parssing[0], " ", 1))
+	{
+		printf("Phoenix: syntax error near unexpected token `|'\n");
+		exit_status = 1;
+		return 0;
+	}
     while (e->parssing[i])
     {
         if (ft_strnstr(e->parssing[i],"echo",ft_strlen(e->parssing[i])))
@@ -54,9 +60,13 @@ int check_2(char *line,t_echo *e,int i, t_data *t)
 		e->len++;
 	if (e->len > 1)
 		pipee(e, t);
-		//Pipe_hundler(e, t);
+	else
+	{
+		printf("Phoenix: syntax error near unexpected token `|'\n");
+		exit_status = 1;
+		return 0;
+	}
     return 1;
-
 }
 
 int check_1(char *line,t_echo *e, t_data *t)

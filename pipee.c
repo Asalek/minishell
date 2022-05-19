@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 18:41:04 by asalek            #+#    #+#             */
-/*   Updated: 2022/05/19 15:16:58 by asalek           ###   ########.fr       */
+/*   Updated: 2022/05/19 19:32:29 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	handl_linee(char *cmd, t_data *t)
 	else if (!strncmp("/", cmd, 1))
 		execut_cmdd("", cmd_split, cmd, t);
 	else if (full_path == 0)
-		command_not_found();
+		command_not_found(0);
 	else
 		full_path = concatenate_string(full_path, "/");
 	execut_cmdd(full_path, cmd_split, cmd, t);

@@ -94,13 +94,15 @@ void handl_line(char *cmd,t_data *t)
 		execut_cmd("", cmd_split, cmd, t);
 	else if (!strncmp("/", cmd, 1))
 		execut_cmd("", cmd_split, cmd, t);
-    else if ((full_path = cmd_found(count,split_p,cmd_split[0])) == 0)
+    else if (cmd_found(count, split_p, cmd_split[0]) == 0)
 	{
+		command_not_found(1);
 		printf("COMMAND NOT FOUND\n");
 		g_exit = 127;
 	}
     else
     {
+		full_path = cmd_found(count,split_p,cmd_split[0]);
         full_path = concatenate_string(full_path, "/");		
         execut_cmd(full_path,cmd_split,cmd, t);
     }

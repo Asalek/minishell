@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:28:22 by asalek            #+#    #+#             */
-/*   Updated: 2022/05/19 15:17:29 by asalek           ###   ########.fr       */
+/*   Updated: 2022/05/19 19:32:41 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_data
 	struct s_linkedlist	*env_list;
 	int					bool_fd;
 	pid_t				pid;
+	int					i;
 }	t_data;
 
 typedef struct s_linkedlist
@@ -82,7 +83,7 @@ int		built_in_functions(char **cmd, t_data *t);
 void	handl_line(char *cmd, t_data *t);
 void	Pipe_hundler(t_echo *e, t_data *t);
 void	pipee(t_echo *e, t_data *t);
-void	command_not_found(void);
+void	command_not_found(int i);
 int		count(char **cmd);
 char	**split_path(char *string);
 char	*return_path(char **envp);

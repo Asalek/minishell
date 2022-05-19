@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:28:22 by asalek            #+#    #+#             */
-/*   Updated: 2022/05/19 19:59:59 by asalek           ###   ########.fr       */
+/*   Updated: 2022/05/19 20:28:56 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,5 @@ void	cd(char *str, char **envp);
 void	*pwd(void);
 void	ft_exit(void);
 void	exit_shell(int a);
+void	execute_path(t_data *t, char **split_p, char **cmd_split, char *cmd);
 #endif

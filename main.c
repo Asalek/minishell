@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/19 20:14:07 by asalek            #+#    #+#             */
+/*   Updated: 2022/05/19 20:31:58 by asalek           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	more_built_in(char **cmd, t_data *t)
@@ -54,36 +66,28 @@ void	handl_line(char *cmd, t_data *t)
 {
 	char	*path;
 	char	**split_p;
-	int 	count;
-	char	*full_path;
+	
 	char	**cmd_split;
 
 	path = return_path(t->envp);
-	count = count_words(path, ':');
+	t->i = count_words(path, ':');
 	split_p = split_path(path);
 	cmd_split = ft_split(cmd, ' ');
 	if (!cmd || !ft_strncmp(cmd, "", 1))
-		return ;	
+		return ;
 	while (*cmd == ' ')
 		cmd++;
 	if (built_in_functions(cmd_split, t))
 		return ;
-	else if (!strncmp("./", cmd, 2))
+	else if (!strncmp("./", cmd, 2) || !strncmp("/", cmd, 1))
 		execut_cmd("", cmd_split, cmd, t);
-	else if (!strncmp("/", cmd, 1))
-		execut_cmd("", cmd_split, cmd, t);
-	else if (cmd_found(count, split_p, cmd_split[0]) == 0)
+	else if (cmd_found(t->i, split_p, cmd_split[0]) == 0)
 	{
-		command_not_found(1);
 		printf("COMMAND NOT FOUND\n");
 		g_exit = 127;
 	}
 	else
-	{
-		full_path = cmd_found(count,split_p,cmd_split[0]);
-		full_path = concatenate_string(full_path, "/");		
-		execut_cmd(full_path,cmd_split,cmd, t);
-	}
+		execute_path(t, split_p, cmd_split, cmd);
 }
 
 int	check_line(char *str, t_data *t, t_echo *e)

@@ -5,7 +5,7 @@ void	cd(char *str, char **envp)
 	int	i;
 	char	*path;
 
-	exit_status = 0;
+	g_exit = 0;
 	i = 0;
 	if (!str)
 	{
@@ -18,13 +18,13 @@ void	cd(char *str, char **envp)
 		if (chdir(path) != 0)
 		{
 			printf("cd: HOME not set\n");
-			exit_status = 1;
+			g_exit = 1;
 		}
 	}
 	else if (chdir(str) != 0)
 	{
 		printf("cd: no such file or directory: %s\n", str);
-		exit_status = 1;
+		g_exit = 1;
 	}
 }
 
@@ -34,7 +34,7 @@ void	*pwd()
 
 	str = malloc(100);
 	str = getcwd(str, 100);
-	exit_status = 0;
+	g_exit = 0;
 	return (str);
 }
 
@@ -75,7 +75,7 @@ void	ft_echo(char **str, t_data *t)
 		else
 			printf("%s\n", str[1]);
 	}
-	exit_status = 0;
+	g_exit = 0;
 }
 
 void	ft_env(t_data *t)
@@ -88,7 +88,7 @@ void	ft_env(t_data *t)
 		printf("%s=%s\n", node->name, node->value);
 		node = node->next;
 	}
-	exit_status= 0;
+	g_exit= 0;
 }
 
 int	is_in_node(t_list2 *t, char *name, char *arg)
@@ -101,12 +101,12 @@ int	is_in_node(t_list2 *t, char *name, char *arg)
 		if (!ft_strcmp(p->name, name))
 		{
 			p->value = arg;
-			exit_status = 0;
+			g_exit = 0;
 			return (1);
 		}
 		p = p->next;
 	}
-	exit_status = 1;
+	g_exit = 1;
 	return (0);
 }
 
@@ -117,7 +117,7 @@ void	export(char *arg, t_data *t)
 	t_list2 *p;
 	t_list2 *node;
 
-	exit_status = 0;
+	g_exit = 0;
 	node = t->env_list;
 	p = NULL;
 	i = 0;
@@ -159,5 +159,5 @@ void	unset(char *arg, t_data *t)
 		}
 		node = node->next;
 	}
-	exit_status = 0;
+	g_exit = 0;
 }

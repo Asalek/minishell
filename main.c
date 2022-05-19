@@ -12,7 +12,7 @@ int	more_built_in(char **cmd, t_data *t)
 		if (!cmd[1])
 		{
 			printf("unset: not enough arguments\n");
-			exit_status = 1;
+			g_exit = 1;
 			return (1);
 		}
 		unset(cmd[1], t);
@@ -97,7 +97,7 @@ void handl_line(char *cmd,t_data *t)
     else if ((full_path = cmd_found(count,split_p,cmd_split[0])) == 0)
 	{
 		printf("COMMAND NOT FOUND\n");
-		exit_status = 127;
+		g_exit = 127;
 	}
     else
     {

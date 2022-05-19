@@ -1,11 +1,16 @@
-#include"minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipee.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/17 18:41:04 by asalek            #+#    #+#             */
+/*   Updated: 2022/05/19 15:16:58 by asalek           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	command_not_found(void)
-{
-	printf("COMMAND NOT FOUND\n");
-	exit_status = 127;
-	exit(0);
-}
+#include"minishell.h"
 
 void	execut_cmdd(char *path, char **cmd, char *command, t_data *t)
 {
@@ -58,137 +63,55 @@ void	handl_linee(char *cmd, t_data *t)
 	execut_cmdd(full_path, cmd_split, cmd, t);
 }
 
-int	count(char **cmd)
+void	pipe_closing(int *fd, int len)
 {
 	int	i;
 
 	i = 0;
-	while (cmd[i])
+	while (i < 2 * len)
+	{
+		close(fd[i]);
 		i++;
-	return (i);
-}
-
-void	pipee(t_echo *e, t_data *t)
-{
-	int		x = 0;
-	pid_t	pid;
-	int		cmd_len = count(e->parssing);
-	int		fd[2*cmd_len];
-
-	e->i = 0;
-	e->j = 0;
-	while(e->i < cmd_len){
-        if(pipe(fd + e->i * 2) < 0)
-		{
-            perror("couldn't pipe");
-            exit(EXIT_FAILURE);
-        }
-		e->i++;
-    }
-	while (e->parssing[x] != NULL)
-	{
-
-		if ((pid = fork()) == -1)
-		{
-			perror("fork");
-			exit(1);
-		}
-		else if (pid == 0)
-		{
-			if (e->parssing[x + 1] != NULL)
-			{
-				if(dup2(fd[e->j + 1], 1) < 0)
-					perror("dup2");
-			}
-			if (e->j != 0)
-			{
-				if(dup2(fd[e->j - 2], 0) < 0)
-				{	
-                    perror("dup");
-				}
-			}
-			for(e->i = 0; e->i < 2 * cmd_len; e->i++){
-                close(fd[e->i]);
-            }
-			handl_linee(e->parssing[x], t);
-		}
-		x++;
-		e->j += 2;
 	}
-	for(e->i = 0; e->i < 2 * cmd_len; e->i++)
-	{
-        close(fd[e->i]);
-    }
-    for(e->i = 0; e->i < cmd_len; e->i++)
-        wait(NULL);
 }
 
-/*
+void	wait_for_childs(int len)
+{
+	int	i;
 
-void	exec_first(char *e, t_data *t, int *fd)
-{
-	dup2(fd[1], 1);
-	close(fd[0]);
-	close(fd[1]);
-	handl_linee(e, t);
-}
-void	exec_mid(char *e, t_data *t, int *fd, int *fd2)
-{
-	dup2(fd2[0], 0);
-	dup2(fd[1], 1);
-	close(fd2[0]);
-	close(fd2[1]);
-	close(fd[0]);
-	close(fd[1]);
-	handl_linee(e, t);
-}
-void	exec_last(char *e, t_data *t,int *fd , int *fd2)
-{
-	dup2(fd2[0], 0);
-	close(fd2[0]);
-	close(fd2[1]);
-	close(fd[0]);
-	close(fd[1]);
-	handl_linee(e, t);
-}
-
-void	pipee(t_echo *e, t_data *t)
-{
-	int	i = 0;
-	int j = 0;
-
-	while (e->parssing[i])
-		i++;
-	int fd[i][2];
-	int	id[i];
-	while (e->parssing[j])
-	{
-		pipe(fd[j]);
-		id[j] = fork();
-		if (id[j] == 0)
-		{
-			if (j == 0)
-				exec_first(e->parssing[j], t, fd[j]);
-			else if (j < i - 1)
-				exec_mid(e->parssing[j], t, fd[j], fd[j - 1]);
-			else
-				exec_last(e->parssing[j], t, fd[j] , fd[j - 1]);
-		}
-		j++;
-	}
-	int f = i;
-	int ff = 0;
-	while (ff != i)
-	{
-		close(fd[ff][0]);
-		close(fd[ff][1]);
-		ff++;
-	}
-	while (f != 0)
+	i = 0;
+	while (i < len)
 	{
 		wait(NULL);
-		f--;
+		i++;
 	}
-	
 }
-*/
+
+void	pipee(t_echo *e, t_data *t)
+{
+	int	*fd;
+
+	e->i = -1;
+	e->j = 0;
+	e->t = 0;
+	fd = malloc(2 * count(e->parssing) * sizeof(int));
+	while (++e->i < count(e->parssing))
+		pipe(fd + e->i * 2);
+	while (e->parssing[e->t] != NULL)
+	{
+		t->pid = fork();
+		if (t->pid == 0)
+		{
+			if (e->parssing[e->t + 1] != NULL)
+				dup2(fd[e->j + 1], 1);
+			if (e->j != 0)
+				dup2(fd[e->j - 2], 0);
+			pipe_closing(fd, count(e->parssing));
+			handl_linee(e->parssing[e->t], t);
+		}
+		e->t++;
+		e->j += 2;
+	}
+	pipe_closing(fd, count(e->parssing));
+	wait_for_childs(count(e->parssing));
+}

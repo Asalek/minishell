@@ -53,5 +53,5 @@ void execut_cmd(char *path,char **cmd,char *command, t_data *t)
 	}
     else
         wait(&i);
-	exit_status = WEXITSTATUS(i);
+	g_exit = WEXITSTATUS(i);
 }

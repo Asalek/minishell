@@ -32,7 +32,7 @@ int check_2(char *line,t_echo *e,int i, t_data *t)
 	if (!ft_strncmp(e->parssing[0], "", 1) || !ft_strncmp(e->parssing[0], " ", 1))
 	{
 		printf("Phoenix: syntax error near unexpected token `|'\n");
-		exit_status = 1;
+		g_exit = 1;
 		return 0;
 	}
     while (e->parssing[i])
@@ -63,7 +63,7 @@ int check_2(char *line,t_echo *e,int i, t_data *t)
 	else
 	{
 		printf("Phoenix: syntax error near unexpected token `|'\n");
-		exit_status = 1;
+		g_exit = 1;
 		return 0;
 	}
     return 1;

@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 20:14:07 by asalek            #+#    #+#             */
-/*   Updated: 2022/05/19 20:31:58 by asalek           ###   ########.fr       */
+/*   Updated: 2022/05/19 20:35:06 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	handl_line(char *cmd, t_data *t)
 {
 	char	*path;
 	char	**split_p;
-	
 	char	**cmd_split;
 
 	path = return_path(t->envp);

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   excute_cmd.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/20 21:07:44 by asalek            #+#    #+#             */
+/*   Updated: 2022/05/20 21:10:54 by asalek           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
- 
-char *cmd_found(int count ,char **split_p,char *cmd)
+
+char	*cmd_found(int count, char **split_p, char *cmd)
 {
 	int				i;
 	DIR				*dir;
@@ -9,16 +21,17 @@ char *cmd_found(int count ,char **split_p,char *cmd)
 	i = 0;
 	while (i < count)
 	{
-		if ((dir = opendir(split_p[i])) == NULL)
+		dir = opendir(split_p[i]);
+		if (dir == NULL)
 			return (NULL);
 		else
-		{ 
-			while ((entry = readdir(dir)) != NULL)
+		{
+			entry = readdir(dir);
+			while (entry != NULL)
 			{
-				if(ft_strcmp(entry->d_name, cmd) == 0)
-				{
+				if (ft_strcmp(entry->d_name, cmd) == 0)
 					return (split_p[i]);
-				}
+				entry = readdir(dir);
 			}
 		}
 		closedir(dir);
@@ -27,28 +40,27 @@ char *cmd_found(int count ,char **split_p,char *cmd)
 	return (0);
 }
 
-
-void execut_cmd(char *path, char **cmd ,char *command, t_data *t)
+void	execut_cmd(char *path, char **cmd, char *command, t_data *t)
 {
 	char	*full_path;
 	int		word_count;
 	int		i;
-	char	**parmList;
+	char	**parmlist;
 
 	full_path = ft_strjoin(path, cmd[0]);
 	word_count = count_words(command, ' ');
 	i = 0;
-	parmList = malloc(sizeof(char*) * word_count + 1);
+	parmlist = malloc(sizeof(char *) * word_count + 1);
 	while (i < word_count)
 	{
-		parmList[i] = cmd[i];
+		parmlist[i] = cmd[i];
 		i++;
 	}
-	parmList[i] = NULL;
+	parmlist[i] = NULL;
 	i = fork();
 	if (i == 0)
 	{
-		if (execve(full_path, parmList, t->envp) == -1)
+		if (execve(full_path, parmlist, t->envp) == -1)
 			exit(0);
 	}
 	else

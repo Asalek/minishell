@@ -1,20 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_redairection.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/20 20:39:58 by asalek            #+#    #+#             */
+/*   Updated: 2022/05/20 20:39:59 by asalek           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void hendl_two(char *line,int i)
+void	redairection_1(t_echo *e)
 {
-    i = 0;
-    (void)line;
-    return ;
-}
- 
-void hendl_one(char *line,int i)
-{
-    i =0;
-    (void)line;
-    return ;
-}
-
-void redairection_1(t_echo *e)
-{
-    printf("%s\n",e->parssing[0]);
+	printf("%s\n", e->parssing[0]);
 }

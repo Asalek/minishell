@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:38:58 by asalek            #+#    #+#             */
-/*   Updated: 2022/05/20 17:38:59 by asalek           ###   ########.fr       */
+/*   Updated: 2022/05/20 17:45:03 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	cd(char *str, char **envp)
 {
-	int	i;
+	int		i;
 	char	*path;
 
 	g_exit = 0;
@@ -22,11 +22,11 @@ void	cd(char *str, char **envp)
 	if (!str)
 	{
 		while (envp[i])
-    	{
-    	    if(ft_strnstr(envp[i],"HOME=",ft_strlen(envp[i])) != 0)
-    	        path = ft_substr(envp[i],5,ft_strlen(envp[i]));
-    	    i++;
-    	}
+		{
+			if (ft_strnstr(envp[i], "HOME=", ft_strlen(envp[i])) != 0)
+				path = ft_substr(envp[i], 5, ft_strlen(envp[i]));
+			i++;
+		}
 		if (chdir(path) != 0)
 		{
 			printf("cd: HOME not set\n");
@@ -40,67 +40,17 @@ void	cd(char *str, char **envp)
 	}
 }
 
-void	*pwd()
-{
-	char	*str;
-
-	str = malloc(100);
-	str = getcwd(str, 100);
-	g_exit = 0;
-	return (str);
-}
-
-void	ft_exit()
-{
-	exit(0);
-}
-
-void	ft_echo(char **str, t_data *t)
-{
-	if (!str[1])
-		printf("\n");
-	else if (has_quotes(str[1]) == 1)
-	{
-		check_quots(str[1]);
-		printf("%s\n", str[1]);
-	}
-	else if (has_quotes(str[1]) == 2)
-	{
-		check_quots(str[1]);
-		if (!strncmp(str[1], "$", 1))
-		{
-			str[1]++;		
-			printf("%s\n", replace_arg_env(str[1], t));
-		}
-		else
-			printf("%s\n", str[1]);
-	}
-	else if (str[1][0] == '-' && str[1][1] == 'n' && str[1][2] == '\0')
-		printf("%s", str[2]);
-	else
-	{
-		if (!ft_strncmp(str[1], "$", 1))
-		{
-			str[1]++;
-			printf("%s\n", replace_arg_env(str[1], t));
-		}
-		else
-			printf("%s\n", str[1]);
-	}
-	g_exit = 0;
-}
-
 void	ft_env(t_data *t)
 {
-	t_list2 *node;
-	node = t->env_list;
+	t_list2	*node;
 
+	node = t->env_list;
 	while (node)
 	{
 		printf("%s=%s\n", node->name, node->value);
 		node = node->next;
 	}
-	g_exit= 0;
+	g_exit = 0;
 }
 
 int	is_in_node(t_list2 *t, char *name, char *arg)
@@ -126,8 +76,8 @@ void	export(char *arg, t_data *t)
 {
 	int		i;
 	char	**splited;
-	t_list2 *p;
-	t_list2 *node;
+	t_list2	*p;
+	t_list2	*node;
 
 	g_exit = 0;
 	node = t->env_list;
@@ -153,7 +103,7 @@ void	export(char *arg, t_data *t)
 
 void	unset(char *arg, t_data *t)
 {
-	t_list2 *node;
+	t_list2	*node;
 
 	node = t->env_list;
 	if (node && !node->next)

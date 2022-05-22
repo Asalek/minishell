@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 20:14:07 by asalek            #+#    #+#             */
-/*   Updated: 2022/05/19 20:35:06 by asalek           ###   ########.fr       */
+/*   Updated: 2022/05/22 15:46:03 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ int	main(int argc, char **argv, char **envp)
 	t_data	t;
 	t_echo	*e;
 
+	signal(SIGQUIT, exit_shell);
+	signal(SIGINT, exit_shell);
 	e = malloc(sizeof(t_echo));
 	ft_strnstr(argv[0], ft_itoa(argc), 2);
 	list = creat_list(envp);
@@ -125,7 +127,6 @@ int	main(int argc, char **argv, char **envp)
 	line = readline(PROMPT);
 	while (line)
 	{
-		signal(2, exit_shell);
 		if (ft_isprint(line[0]))
 			add_history(line);
 		check_line(line, &t, e);

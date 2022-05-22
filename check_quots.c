@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:53:53 by asalek            #+#    #+#             */
-/*   Updated: 2022/05/22 16:34:22 by asalek           ###   ########.fr       */
+/*   Updated: 2022/05/22 18:20:04 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,14 @@ void	exit_shell(int a)
 	if (a == SIGINT)
 	{
 		g_exit = 1;
-		ft_putstr_fd("\n\033[0;36mPhoenix>\033[0m\033[0;37m", 1);
+		ft_putstr_fd("\n", 1);
 		rl_on_new_line();
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	else if (a == SIGQUIT)
 	{
-		ft_putstr_fd("\r\033[0;36mPhoenix>\033[0m\033[0;37m", 1);
+		ft_putstr_fd("\r", 1);
 		rl_on_new_line();
 		rl_redisplay();
 	}

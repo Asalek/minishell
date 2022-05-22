@@ -28,14 +28,15 @@ CFLAGS = -Wall -Wextra -Werror
 SRC = main.c check_path.c excute_cmd.c built_in.c libft.c create_linked_list.c check_syntax_cmd.c handle_redairection.c if_is_echo.c cmd_syntax_2.c check_operators.c \
 quotes.c pipee.c pipe.c check_quots.c buitl_in_additional.c
 OBJ = $(SRC:.c=.o)
-
+CFLAGS := -g -I /goinfre/${USER}/.brew/opt/readline/include -D BUFFER_SIZE=1
+LDFLAGS := -L /goinfre/${USER}/.brew/opt/readline/lib
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	@echo "${WHITE}░M░i░n░i░ ░S░h░e░l░l░\033[0m"
 	@make -C libft/
-	@$(CC) -lreadline libft/libft.a $^ -o $@
+	@$(CC) $(CFLAGS) $(LDFLAGS) -lreadline libft/libft.a $^ -o $@
 	@echo "${GREEN}all${RESET}"
 
 %.o: %.c

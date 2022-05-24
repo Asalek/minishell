@@ -1,4 +1,0 @@
-brew install openssl@1.1
-
-brew install readline
-

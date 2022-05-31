@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 18:41:04 by asalek            #+#    #+#             */
-/*   Updated: 2022/05/19 19:32:29 by asalek           ###   ########.fr       */
+/*   Updated: 2022/05/31 12:53:57 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	handl_linee(char *cmd, t_data *t)
 		return ;
 	while (*cmd == ' ')
 		cmd++;
-	if (built_in_functions(cmd_split, t))
+	if (built_in_functions(cmd_split, t, cmd))
 		exit(0);
 	else if (!strncmp("./", cmd, 2))
 		execut_cmdd("", cmd_split, cmd, t);

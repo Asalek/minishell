@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 20:14:07 by asalek            #+#    #+#             */
-/*   Updated: 2022/05/22 15:46:03 by asalek           ###   ########.fr       */
+/*   Updated: 2022/05/31 12:48:49 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	more_built_in(char **cmd, t_data *t)
 		return (0);
 }
 
-int	built_in_functions(char **cmd, t_data *t)
+int	built_in_functions(char **cmd, t_data *t, char *cmdline)
 {
 	if (!ft_strcmp(cmd[0], "cd"))
 	{
@@ -50,7 +50,7 @@ int	built_in_functions(char **cmd, t_data *t)
 		ft_exit();
 	if (!ft_strcmp(cmd[0], "echo"))
 	{
-		ft_echo(cmd, t);
+		ft_echo(cmdline, t);
 		return (1);
 	}
 	if (!ft_strcmp(cmd[0], "env"))
@@ -76,7 +76,7 @@ void	handl_line(char *cmd, t_data *t)
 		return ;
 	while (*cmd == ' ')
 		cmd++;
-	if (built_in_functions(cmd_split, t))
+	if (built_in_functions(cmd_split, t, cmd))
 		return ;
 	else if (!strncmp("./", cmd, 2) || !strncmp("/", cmd, 1))
 		execut_cmd("", cmd_split, cmd, t);

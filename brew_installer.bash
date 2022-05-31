@@ -14,7 +14,7 @@ ctrl_c() {
 
 printf "\n\033[33m------- brew ===> \033[0m"
 sh -c './scripts/spin.bash 2>/dev/null &'
-rm -rf brew* &>/dev/null
+#rm -rf brew* &>/dev/null
 curl -L https://github.com/Homebrew/brew/archive/1.9.0.tar.gz >brew1.9.0.tar.gz 2>/dev/null
 tar -xvzf brew1.9.0.tar.gz &>/dev/null
 rm -rf brew1.9.0.tar.gz &>/dev/null

@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:28:22 by asalek            #+#    #+#             */
-/*   Updated: 2022/05/22 15:07:24 by asalek           ###   ########.fr       */
+/*   Updated: 2022/05/31 12:49:49 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_list2	*creat_list(char **str);
 t_list2	*ft_lstneww(char *v_name, char *v_value);
 void	ft_lstadd_backk(t_list2 **lst, t_list2 *new);
 int		more_built_in(char **cmd, t_data *t);
-int		built_in_functions(char **cmd, t_data *t);
+int		built_in_functions(char **cmd, t_data *t, char *cmdline);
 void	handl_line(char *cmd, t_data *t);
 void	Pipe_hundler(t_echo *e, t_data *t);
 void	pipee(t_echo *e, t_data *t);
@@ -89,7 +89,7 @@ char	**split_path(char *string);
 char	*return_path(char **envp);
 char	*concatenate_string(char *original, char *add);
 size_t	count_words(char const *s, char c);
-void	ft_echo(char **str, t_data *t);
+void	ft_echo(char *str, t_data *t);
 void	ft_env(t_data *t);
 void	unset(char *arg, t_data *t);
 void	export(char *arg, t_data *t);

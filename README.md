@@ -14,10 +14,6 @@ make && clear
 ./minishell
 ```
 
-brew install openssl@1.1
-
-brew install readline
-
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 

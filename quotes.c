@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:19:06 by asalek            #+#    #+#             */
-/*   Updated: 2022/06/01 20:56:25 by asalek           ###   ########.fr       */
+/*   Updated: 2022/06/01 22:31:47 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ char	*replace_arg_env(char *str, t_data *t)
 	{
 		if (!ft_strcmp(str, p->name))
 		{
-			printf("%s", p->value);
 			return (p->value);
 		}
 		p = p->next;

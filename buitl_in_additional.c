@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:44:13 by asalek            #+#    #+#             */
-/*   Updated: 2022/06/01 21:18:02 by asalek           ###   ########.fr       */
+/*   Updated: 2022/06/01 22:36:47 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,14 +104,11 @@ void	ft_echo(char *str, t_data *t)
 
 	i = 0;
 	n = 0;
-	if (!str)
-		printf("\n");
-	if (!ft_strncmp(str, "echo ", 5))
-		str = ft_strtrim(str + 5, str + ft_strlen(str));
+	if (!ft_strncmp(str, "echo ", 4))
+		str = ft_strtrim(str + 4, str + ft_strlen(str));
 	n = skip_n(str);
 	str = ft_strtrim(str + n, str + ft_strlen(str));
 	p = echo_quotes(str);
-
 	while (p)
 	{
 		int	j;
@@ -138,15 +135,14 @@ void	ft_echo(char *str, t_data *t)
 						j++;
 						env = malloc(ft_strlen(p->value) * sizeof(char));
 						i = 0;
-						while (p->value[j] != ' ' && p->value[j] != '\0'
-								&& p->value[j] != '\"' && p->value[j] != '\'')
+						while (ft_isalpha(p->value[j]) || p->value[j] == '_' || p->value[j] == '?')
 						{
 							env[i] = p->value[j];
 							i++;
 							j++;
 						}
 						env[i] = '\0';
-						replace_arg_env(env, t);
+						printf("%s", replace_arg_env(env, t));
 						free(env);
 						j--;
 					}
@@ -161,13 +157,6 @@ void	ft_echo(char *str, t_data *t)
 		}
 		p = p->next;
 	}
-	
-	// while (p)
-	// {
-	// 	printf("%s\n", p->value);
-	// 	p = p->next;
-	// }
-	
 	if (n == 0)
 		printf("\n");
 	g_exit = 0;

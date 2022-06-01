@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:44:13 by asalek            #+#    #+#             */
-/*   Updated: 2022/06/01 22:36:47 by asalek           ###   ########.fr       */
+/*   Updated: 2022/06/01 22:57:18 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	skip_n(char *str)
 	int	i;
 
 	i = 0;
+	if (str[i] == 0)
+		i++;
 	while (str[i] == '-' && str[i + 1] == 'n'&& str[i + 2] == ' ')
 	{
 		i += 3;
@@ -36,12 +38,13 @@ char	*ft_strcut(char	*str, int start, int end)
 	if (!str)
 		return (NULL);
 	i = 0;
-	while (start < end)
+	while (start <= end)
 	{
 		string[i] = str[start];
 		i++;
 		start++;
 	}
+	string[i] = '\0';
 	return (string);
 }
 
@@ -104,10 +107,10 @@ void	ft_echo(char *str, t_data *t)
 
 	i = 0;
 	n = 0;
-	if (!ft_strncmp(str, "echo ", 4))
-		str = ft_strtrim(str + 4, str + ft_strlen(str));
+	if (!ft_strncmp(str, "echo ", 5))
+		str = ft_strcut(str, 5, ft_strlen(str));
 	n = skip_n(str);
-	str = ft_strtrim(str + n, str + ft_strlen(str));
+	str = ft_strcut(str, n, ft_strlen(str));
 	p = echo_quotes(str);
 	while (p)
 	{

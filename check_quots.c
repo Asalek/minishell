@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 19:53:53 by asalek            #+#    #+#             */
-/*   Updated: 2022/05/31 20:32:30 by asalek           ###   ########.fr       */
+/*   Updated: 2022/06/01 20:38:53 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exit_shell(int a)
 		g_exit = 1;
 		ft_putstr_fd("\n", 1);
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	else if (a == SIGQUIT)

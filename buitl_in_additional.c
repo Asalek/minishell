@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:44:13 by asalek            #+#    #+#             */
-/*   Updated: 2022/06/01 15:01:13 by asalek           ###   ########.fr       */
+/*   Updated: 2022/06/01 21:18:02 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	ft_echo(char *str, t_data *t)
 {
 	int	i;
 	int	n;
+	char	*env;
 	t_list2	*p;
 
 	i = 0;
@@ -110,43 +111,65 @@ void	ft_echo(char *str, t_data *t)
 	n = skip_n(str);
 	str = ft_strtrim(str + n, str + ft_strlen(str));
 	p = echo_quotes(str);
+
 	while (p)
 	{
-		printf("%s\n", p->value);
+		int	j;
+
+		j = 0;
+		while (p->value[j])
+		{
+			if (p->value[j] == '\'')
+			{
+				j++;
+				while (p->value[j] != '\'')
+				{
+					ft_putchar_fd(p->value[j], 1);
+					j++;
+				}
+			}
+			else if (p->value[j] == '\"')
+			{
+				j++;
+				while (p->value[j] && p->value[j] != '\"')
+				{
+					if (p->value[j] == '$')
+					{
+						j++;
+						env = malloc(ft_strlen(p->value) * sizeof(char));
+						i = 0;
+						while (p->value[j] != ' ' && p->value[j] != '\0'
+								&& p->value[j] != '\"' && p->value[j] != '\'')
+						{
+							env[i] = p->value[j];
+							i++;
+							j++;
+						}
+						env[i] = '\0';
+						replace_arg_env(env, t);
+						free(env);
+						j--;
+					}
+					else
+						ft_putchar_fd(p->value[j], 1);
+					j++;
+				}
+			}
+			else
+				ft_putchar_fd(p->value[j], 1);
+			j++;
+		}
 		p = p->next;
 	}
 	
+	// while (p)
+	// {
+	// 	printf("%s\n", p->value);
+	// 	p = p->next;
+	// }
+	
 	if (n == 0)
 		printf("\n");
-	/*
-	else if (has_quotes(str[1]) == 1)
-	{
-		check_quots(str[1]);
-		printf("%s\n", str[1]);
-	}
-	else if (has_quotes(str[1]) == 2)
-	{
-		check_quots(str[1]);
-		if (!strncmp(str[1], "$", 1))
-		{
-			str[1]++;
-			printf("%s\n", replace_arg_env(str[1], t));
-		}
-		else
-			printf("%s\n", str[1]);
-	}
-	else if (str[1][0] == '-' && str[1][1] == 'n' && str[1][2] == '\0')
-		printf("%s", str[2]);
-	else
-	{
-		if (!ft_strncmp(str[1], "$", 1))
-		{
-			str[1]++;
-			printf("%s\n", replace_arg_env(str[1], t));
-		}
-		else
-			printf("%s\n", str[1]);
-	}*/
 	g_exit = 0;
 }
 

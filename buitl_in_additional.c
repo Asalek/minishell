@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:44:13 by asalek            #+#    #+#             */
-/*   Updated: 2022/05/31 13:44:52 by asalek           ###   ########.fr       */
+/*   Updated: 2022/06/01 15:01:13 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,43 +24,101 @@ int	skip_n(char *str)
 	return (i);
 }
 
-void	echo_quotes(char *str)
+char	*ft_strcut(char	*str, int start, int end)
+{
+	int		i;
+	char	*string;
+
+	i = start;
+	while (i < end)
+		i++;
+	string = malloc(i + 1);
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (start < end)
+	{
+		string[i] = str[start];
+		i++;
+		start++;
+	}
+	return (string);
+}
+
+t_list2	*echo_quotes(char *str)
 {
 	int	i;
+	int	j;
 	char	c;
+	char	**splited;
+	char	*arg;
+	t_list2 *t;
+	t = NULL;
 	
 	i = 0;
+	j = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'')
+		if (str[i + 1] == '\0' && j < i && i > 0)
 		{
-			c = str[i];
-			i++;
-			while (str[i] != c)
+			if (str[j] == '\\')
+				j++;
+			arg = ft_strcut(str, j , i + 1);
+			ft_lstadd_backk(&t, ft_lstneww(arg, arg));
+		}
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			if (j < i && i > 0)
 			{
-				printf("%c", str[i]);
+				arg = ft_strcut(str, j , i);
+				ft_lstadd_backk(&t, ft_lstneww(arg, arg));
 			}
-			
-		}				
+			j = i;
+			if (str[i] == '\'')
+			{
+				i++;
+				while (str[i] != '\'')
+					i++;
+			}
+			else if (str[i] == '\"')
+			{
+				i++;
+				while (str[i] != '\"')
+					i++;
+			}
+			arg = ft_strcut(str, j , i + 1);
+			ft_lstadd_backk(&t, ft_lstneww(arg, arg));
+			j = i + 1;
+		}	
+		i++;
 	}
+	return (t);
 }
 
 void	ft_echo(char *str, t_data *t)
 {
 	int	i;
 	int	n;
+	t_list2	*p;
 
 	i = 0;
 	n = 0;
+	if (!str)
+		printf("\n");
 	if (!ft_strncmp(str, "echo ", 5))
 		str = ft_strtrim(str + 5, str + ft_strlen(str));
 	n = skip_n(str);
 	str = ft_strtrim(str + n, str + ft_strlen(str));
-	echo_quotes(str);
-	if (n > 0)
+	p = echo_quotes(str);
+	while (p)
+	{
+		printf("%s\n", p->value);
+		p = p->next;
+	}
+	
+	if (n == 0)
 		printf("\n");
-	/*if (!str[1])
-		printf("\n");
+	/*
 	else if (has_quotes(str[1]) == 1)
 	{
 		check_quots(str[1]);
@@ -88,8 +146,8 @@ void	ft_echo(char *str, t_data *t)
 		}
 		else
 			printf("%s\n", str[1]);
-	}
-	g_exit = 0;*/
+	}*/
+	g_exit = 0;
 }
 
 void	*pwd(void)

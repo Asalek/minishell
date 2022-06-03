@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 20:12:53 by asalek            #+#    #+#             */
-/*   Updated: 2022/01/20 23:09:15 by asalek           ###   ########.fr       */
+/*   Updated: 2022/06/03 16:29:43 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 //ADDITIONAL FUNCTIONS :
 
 int		ft_strcmp(const char *s1, const char *s2);
+char	*ft_strcut(char	*str, int start, int end);
 
 //Bonus
 

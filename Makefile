@@ -38,6 +38,7 @@ $(NAME): $(OBJ)
 	@make -C libft/
 	@$(CC) $(CFLAGS) $(LDFLAGS) -lreadline libft/libft.a $^ -o $@
 	@echo "${GREEN}all${RESET}"
+	@clear
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@

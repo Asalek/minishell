@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 17:44:13 by asalek            #+#    #+#             */
-/*   Updated: 2022/06/01 22:57:18 by asalek           ###   ########.fr       */
+/*   Updated: 2022/06/03 15:42:36 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,37 @@ char	*ft_strcut(char	*str, int start, int end)
 	return (string);
 }
 
+int	ret_between_quotes(char *str, int i)
+{
+	if (str[i] == '\'')
+	{
+		i++;
+		while (str[i] != '\'')
+			i++;
+	}
+	else if (str[i] == '\"')
+	{
+		i++;
+		while (str[i] != '\"')
+			i++;
+	}
+	return (i);
+}
+
 t_list2	*echo_quotes(char *str)
 {
-	int	i;
-	int	j;
-	char	c;
-	char	**splited;
+	int		i;
+	int		j;
 	char	*arg;
 	t_list2 *t;
+
 	t = NULL;
-	
 	i = 0;
 	j = 0;
 	while (str[i])
 	{
 		if (str[i + 1] == '\0' && j < i && i > 0)
 		{
-			if (str[j] == '\\')
-				j++;
 			arg = ft_strcut(str, j , i + 1);
 			ft_lstadd_backk(&t, ft_lstneww(arg, arg));
 		}
@@ -73,22 +86,11 @@ t_list2	*echo_quotes(char *str)
 		{
 			if (j < i && i > 0)
 			{
-				arg = ft_strcut(str, j , i);
+				arg = ft_strcut(str, j , i - 1);
 				ft_lstadd_backk(&t, ft_lstneww(arg, arg));
 			}
 			j = i;
-			if (str[i] == '\'')
-			{
-				i++;
-				while (str[i] != '\'')
-					i++;
-			}
-			else if (str[i] == '\"')
-			{
-				i++;
-				while (str[i] != '\"')
-					i++;
-			}
+			i = ret_between_quotes(str, i);
 			arg = ft_strcut(str, j , i + 1);
 			ft_lstadd_backk(&t, ft_lstneww(arg, arg));
 			j = i + 1;
@@ -145,17 +147,19 @@ void	ft_echo(char *str, t_data *t)
 							j++;
 						}
 						env[i] = '\0';
-						printf("%s", replace_arg_env(env, t));
+						ft_putstr_fd(replace_arg_env(env, t), 1);
 						free(env);
 						j--;
 					}
 					else
-						ft_putchar_fd(p->value[j], 1);
+						if (p->value[j] != '\\')
+							ft_putchar_fd(p->value[j], 1);
 					j++;
 				}
 			}
 			else
-				ft_putchar_fd(p->value[j], 1);
+				if (p->value[j] != '\\')
+					ft_putchar_fd(p->value[j], 1);
 			j++;
 		}
 		p = p->next;

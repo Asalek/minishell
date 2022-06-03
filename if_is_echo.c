@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 14:47:22 by asalek            #+#    #+#             */
-/*   Updated: 2022/05/24 14:48:40 by asalek           ###   ########.fr       */
+/*   Updated: 2022/06/03 17:21:30 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,7 @@ int	check_if_is_echo(char *line)
 	if (line[i] == '\'' || line[i] == '"')
 	{
 		i = handle_1(line, i);
-		if (i == 0)
-			return (0);
-		else
-			return (i);
+		return (i);
 	}
 	t = i;
 	while (ft_isalpha(line[i]) && line[i])

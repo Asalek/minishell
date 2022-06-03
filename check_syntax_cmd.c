@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_syntax_cmd.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/03 17:21:49 by asalek            #+#    #+#             */
+/*   Updated: 2022/06/03 17:37:42 by asalek           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	check_3(char *line, t_echo *e)
 {
-	if (ft_strnstr(line,"echo",ft_strlen(line)))
+	if (ft_strnstr(line, "echo", ft_strlen(line)))
 	{
-		if(check_qouts_echo(line,e) == 0) 
+		if (check_qouts_echo(line, e) == 0)
 		{
 			{
 				printf("invalid syntax quots\n");
@@ -12,43 +24,37 @@ int	check_3(char *line, t_echo *e)
 			}
 		}
 	}
-		else
+	else
+	{
+		if (check_qouts(line, e) == 0)
 		{
-			if(check_qouts(line,e) == 0) 
-			{
-				printf("invalid syntax quots\n");
-				return (0);
-			}
+			printf("invalid syntax quots\n");
+			return (0);
 		}
+	}
 	return (1);
 }
 
-int check_2(char *line,t_echo *e,int i, t_data *t)
+int	check_2(char *line, t_echo *e, int i, t_data *t)
 {
-	e->parssing = ft_split(line,'|');
-	if (!ft_strncmp(e->parssing[0], "", 1) || !ft_strncmp(e->parssing[0], " ", 1))
+	e->parssing = ft_split(line, '|');
+	if (!ft_strncmp(e->parssing[0], "", 1)
+		|| !ft_strncmp(e->parssing[0], " ", 1))
 	{
-		printf("Phoenix: syntax error near unexpected token `|'\n");
 		g_exit = 1;
-		return (0);
+		return (printf("Phoenix: syntax error near unexpected token `|'\n"), 0);
 	}
 	while (e->parssing[i])
 	{
-		if (ft_strnstr(e->parssing[i],"echo",ft_strlen(e->parssing[i])))
+		if (ft_strnstr(e->parssing[i], "echo", ft_strlen(e->parssing[i])))
 		{
-			if(check_qouts_echo(e->parssing[i],e) == 0) 
-			{
-				printf("invalid syntax quots\n");
-				return (0);
-			}    
+			if (check_qouts_echo(e->parssing[i], e) == 0)
+				return (printf("invalid syntax quots\n"), 0);
 		}
 		else
 		{
-			if(check_qouts(e->parssing[i],e) == 0) 
-			{
-				printf("invalid syntax quots\n");
-				return (0);
-			} 
+			if (check_qouts(e->parssing[i], e) == 0)
+				return (printf("invalid syntax quots\n"), 0);
 		}
 		i++;
 	}
@@ -59,18 +65,17 @@ int check_2(char *line,t_echo *e,int i, t_data *t)
 		pipee(e, t);
 	else
 	{
-		printf("Phoenix: syntax error near unexpected token `|'\n");
 		g_exit = 1;
-		return (0);
+		return (printf("Phoenix: syntax error near unexpected token `|'\n"), 0);
 	}
 	return (1);
 }
 
 int	check_1(char *line, t_echo *e, t_data *t)
-{ 
-	if (ft_strnstr(line,"|",ft_strlen(line)))
+{
+	if (ft_strnstr(line, "|", ft_strlen(line)))
 	{
-		if(check_2(line, e, 0, t) == 0)
+		if (check_2(line, e, 0, t) == 0)
 			return (0);
 		else
 			return (1);
@@ -83,9 +88,9 @@ int	check_1(char *line, t_echo *e, t_data *t)
 	return (1);
 }
 
-int redairection_handle(char *line)
+int	redairection_handle(char *line)
 {
-	int r;
+	int	r;
 
 	if (ft_strnstr(line, "echo", ft_strlen(line)))
 	{
@@ -96,34 +101,39 @@ int redairection_handle(char *line)
 			return (0);
 		}
 	}
-	if(hendl_1(line, 0) == 0)
+	if (hendl_1(line, 0) == 0)
 		return (0);
-
 	return (1);
 }
 
-char* line_handle(char *line,t_echo *e,t_data *t)
+char	*line_handle(char *line, t_echo *e, t_data *t)
 {
-	int i;
+	int	i;
 
-	if (check_1(line,e, t) == 0)
+	if (check_1(line, e, t) == 0)
 		return (0);
 	i = 0;
 	if (ft_strnstr(line, "|", ft_strlen(line)))
 	{
 		while (e->parssing[i])
 		{
-			if (ft_strnstr(e->parssing[i], ">", ft_strlen(line)) || ft_strnstr(e->parssing[i], "<", ft_strlen(line)) || ft_strnstr(line, "echo", ft_strlen(line)))
-				if(redairection_handle(e->parssing[i]) == 0)
+			if (ft_strnstr(e->parssing[i], ">", ft_strlen(line))
+				|| ft_strnstr(e->parssing[i], "<", ft_strlen(line))
+				|| ft_strnstr(line, "echo", ft_strlen(line)))
+				if (redairection_handle(e->parssing[i]) == 0)
 					return (0);
 			i++;
 		}
 		i = 0;
 		while (e->parssing[i])
 		{
-			if (ft_strnstr(e->parssing[i], ">", ft_strlen(line) == 0) && ft_strnstr(e->parssing[i], "<", ft_strlen(line) == 0) && ft_strnstr(line, "echo", ft_strlen(line) == 0))
-				handl_line(e->parssing[i],t);
-			else if (ft_strnstr(e->parssing[i], ">", ft_strlen(line)) || ft_strnstr(e->parssing[i], "<", ft_strlen(line)) || ft_strnstr(line, "echo", ft_strlen(line)))
+			if (ft_strnstr(e->parssing[i], ">", ft_strlen(line) == 0)
+				&& ft_strnstr(e->parssing[i], "<", ft_strlen(line) == 0)
+				&& ft_strnstr(line, "echo", ft_strlen(line) == 0))
+				handl_line(e->parssing[i], t);
+			else if (ft_strnstr(e->parssing[i], ">", ft_strlen(line))
+				|| ft_strnstr(e->parssing[i], "<", ft_strlen(line))
+				|| ft_strnstr(line, "echo", ft_strlen(line)))
 				redairection_1(e);
 			i++;
 		}

@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 16:28:15 by asalek            #+#    #+#             */
-/*   Updated: 2022/06/03 16:53:10 by asalek           ###   ########.fr       */
+/*   Updated: 2022/06/03 17:15:34 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,67 @@ int	replace_word(char *str, int i, t_data *t)
 	return (i);
 }
 
-void	ft_echo(char *str, t_data *t)
+void	double_quote(int j, char *p, t_data *t)
 {
-	int	i;
-	int	n;
+	int		i;
 	char	*env;
-	t_list2	*p;
 
 	i = 0;
+	if (p[j] == '$')
+	{
+		j++;
+		env = malloc(ft_strlen(p) * sizeof(char));
+		i = 0;
+		while (ft_isalpha(p[j]) || p[j] == '_' || p[j] == '?')
+		{
+			env[i] = p[j];
+			i++;
+			j++;
+		}
+		env[i] = '\0';
+		ft_putstr_fd(replace_arg_env(env, t), 1);
+		free(env);
+		j--;
+	}
+	else
+		if (p[j] != '\\')
+			ft_putchar_fd(p[j], 1);
+}
+
+void	echo_exec(char *p, char *str, t_data *t)
+{
+	int		j;
+
+	j = 0;
+	while (p[j])
+	{
+		if (p[j] == '\'')
+		{
+			j++;
+			while (p[j] != '\'')
+				ft_putchar_fd(p[j++], 1);
+		}
+		else if (p[j] == '\"')
+		{
+			j++;
+			while (p[j] && p[j] != '\"')
+			{
+				double_quote(j, p, t);
+				j++;
+			}
+		}
+		else
+			if (p[j] != '\\')
+				j = replace_word(str, j, t) - 1;
+		j++;
+	}
+}
+
+void	ft_echo(char *str, t_data *t)
+{
+	int		n;
+	t_list2	*p;
+
 	n = 0;
 	if (!ft_strncmp(str, "echo ", 5))
 		str = ft_strcut(str, 5, ft_strlen(str));
@@ -83,51 +136,7 @@ void	ft_echo(char *str, t_data *t)
 	p = echo_quotes(str);
 	while (p)
 	{
-		int	j;
-		j = 0;
-		while (p->value[j])
-		{
-			if (p->value[j] == '\'')
-			{
-				j++;
-				while (p->value[j] != '\'')
-				{
-					ft_putchar_fd(p->value[j], 1);
-					j++;
-				}
-			}
-			else if (p->value[j] == '\"')
-			{
-				j++;
-				while (p->value[j] && p->value[j] != '\"')
-				{
-					if (p->value[j] == '$')
-					{
-						j++;
-						env = malloc(ft_strlen(p->value) * sizeof(char));
-						i = 0;
-						while (ft_isalpha(p->value[j]) || p->value[j] == '_' || p->value[j] == '?')
-						{
-							env[i] = p->value[j];
-							i++;
-							j++;
-						}
-						env[i] = '\0';
-						ft_putstr_fd(replace_arg_env(env, t), 1);
-						free(env);
-						j--;
-					}
-					else
-						if (p->value[j] != '\\')
-							ft_putchar_fd(p->value[j], 1);
-					j++;
-				}
-			}
-			else
-				if (p->value[j] != '\\')
-					j = replace_word(str, j, t) - 1;
-			j++;
-		}
+		echo_exec(p->value, str, t);
 		p = p->next;
 	}
 	if (n == 0)

@@ -26,7 +26,7 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 SRC = main.c check_path.c excute_cmd.c built_in.c libft.c create_linked_list.c check_syntax_cmd.c handle_redairection.c if_is_echo.c cmd_syntax_2.c check_operators.c \
-quotes.c pipee.c pipe.c check_quots.c buitl_in_additional.c
+quotes.c pipee.c pipe.c check_quots.c built_in_additional.c
 OBJ = $(SRC:.c=.o)
 CFLAGS := -g -I /goinfre/${USER}/.brew/opt/readline/include -D BUFFER_SIZE=1
 LDFLAGS := -L /goinfre/${USER}/.brew/opt/readline/lib
@@ -38,7 +38,7 @@ $(NAME): $(OBJ)
 	@make -C libft/
 	@$(CC) $(CFLAGS) $(LDFLAGS) -lreadline libft/libft.a $^ -o $@
 	@echo "${GREEN}all${RESET}"
-	@clear
+#	@clear
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@

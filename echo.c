@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 16:28:15 by asalek            #+#    #+#             */
-/*   Updated: 2022/06/04 19:42:09 by asalek           ###   ########.fr       */
+/*   Updated: 2022/06/04 20:30:37 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_list2	*echo_quotes(char *str)
 	return (t);
 }
 
-void	double_quote(int j, char *p, t_data *t)
+int	double_quote(int j, char *p, t_data *t)
 {
 	int		i;
 	char	*env;
@@ -65,6 +65,7 @@ void	double_quote(int j, char *p, t_data *t)
 	else
 		if (p[j] != '\\')
 			ft_putchar_fd(p[j], 1);
+	return (j);
 }
 
 int	replace_word(char *str, int i, t_data *t)
@@ -110,7 +111,7 @@ void	echo_exec(char *p, char *str, t_data *t)
 			j++;
 			while (p[j] && p[j] != '\"')
 			{
-				double_quote(j, p, t);
+				j = double_quote(j, p, t);
 				j++;
 			}
 		}

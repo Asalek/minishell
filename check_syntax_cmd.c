@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 17:21:49 by asalek            #+#    #+#             */
-/*   Updated: 2022/06/03 17:37:42 by asalek           ###   ########.fr       */
+/*   Updated: 2022/06/04 16:17:33 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	check_2(char *line, t_echo *e, int i, t_data *t)
 	if (!ft_strncmp(e->parssing[0], "", 1)
 		|| !ft_strncmp(e->parssing[0], " ", 1))
 	{
-		g_exit = 1;
+		g_exit = 258;
 		return (printf("Phoenix: syntax error near unexpected token `|'\n"), 0);
 	}
 	while (e->parssing[i])
@@ -65,7 +65,7 @@ int	check_2(char *line, t_echo *e, int i, t_data *t)
 		pipee(e, t);
 	else
 	{
-		g_exit = 1;
+		g_exit = 258;
 		return (printf("Phoenix: syntax error near unexpected token `|'\n"), 0);
 	}
 	return (1);

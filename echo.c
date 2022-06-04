@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 16:28:15 by asalek            #+#    #+#             */
-/*   Updated: 2022/06/03 17:15:34 by asalek           ###   ########.fr       */
+/*   Updated: 2022/06/04 19:42:09 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,33 +40,6 @@ t_list2	*echo_quotes(char *str)
 	return (t);
 }
 
-int	replace_word(char *str, int i, t_data *t)
-{
-	char	*s;
-	int		j;
-
-	j = 0;
-	s = malloc(ft_strlen(str) * sizeof(char));
-	if (str[i] == '$')
-	{
-		i++;
-		while (str[i] != '\'' && str[i] != '\"' && str[i] != '\0')
-		{
-			s[j] = str[i];
-			j++;
-			i++;
-		}
-		s[j] = '\0';
-		ft_putstr_fd(replace_arg_env(s, t), 1);
-	}
-	else
-	{
-		ft_putchar_fd(str[i], 1);
-		i++;
-	}
-	return (i);
-}
-
 void	double_quote(int j, char *p, t_data *t)
 {
 	int		i;
@@ -94,12 +67,37 @@ void	double_quote(int j, char *p, t_data *t)
 			ft_putchar_fd(p[j], 1);
 }
 
+int	replace_word(char *str, int i, t_data *t)
+{
+	char	*s;
+	int		j;
+
+	j = 0;
+	if (str[i] == '$')
+	{
+		i++;
+		s = malloc(ft_strlen(str) * sizeof(char));
+		while (str[i] != '\'' && str[i] != '\"'
+			&& str[i] != '\0' && str[i] != ' ')
+		{
+			s[j] = str[i];
+			j++;
+			i++;
+		}
+		s[j] = '\0';
+		ft_putstr_fd(replace_arg_env(s, t), 1);
+	}
+	else
+		printf("%c", str[i]);
+	return (i);
+}
+
 void	echo_exec(char *p, char *str, t_data *t)
 {
 	int		j;
 
 	j = 0;
-	while (p[j])
+	while (p[j] != '\0')
 	{
 		if (p[j] == '\'')
 		{
@@ -116,9 +114,8 @@ void	echo_exec(char *p, char *str, t_data *t)
 				j++;
 			}
 		}
-		else
-			if (p[j] != '\\')
-				j = replace_word(str, j, t) - 1;
+		else if (p[j] != '\\')
+			j = replace_word(p, j, t);
 		j++;
 	}
 }

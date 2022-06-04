@@ -6,7 +6,7 @@
 /*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 18:41:04 by asalek            #+#    #+#             */
-/*   Updated: 2022/05/31 12:53:57 by asalek           ###   ########.fr       */
+/*   Updated: 2022/06/04 16:11:28 by asalek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	pipe_closing(int *fd, int len)
 	}
 }
 
-void	wait_for_childs(int len)
+void	wait_for_childs(int len, int pid)
 {
 	int	i;
 
@@ -85,6 +85,7 @@ void	wait_for_childs(int len)
 		wait(NULL);
 		i++;
 	}
+	g_exit = WEXITSTATUS(pid);
 }
 
 void	pipee(t_echo *e, t_data *t)
@@ -113,5 +114,5 @@ void	pipee(t_echo *e, t_data *t)
 		e->j += 2;
 	}
 	pipe_closing(fd, count(e->parssing));
-	wait_for_childs(count(e->parssing));
+	wait_for_childs(count(e->parssing), t->pid);
 }

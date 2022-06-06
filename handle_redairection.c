@@ -14,5 +14,5 @@
 
 void	redairection_1(t_echo *e)
 {
-	printf("%s\n", e->parssing[0]);
+	// printf("%s\n", e->parssing[0]);
 }

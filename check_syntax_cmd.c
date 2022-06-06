@@ -37,7 +37,8 @@ int	check_3(char *line, t_echo *e)
 
 int	check_2(char *line, t_echo *e, int i, t_data *t)
 {
-	e->parssing = ft_split(line, '|');
+	//e->parssing = ft_split(line, '|');
+	e->parssing = split_pipe(line);
 	if (!ft_strncmp(e->parssing[0], "", 1)
 		|| !ft_strncmp(e->parssing[0], " ", 1))
 	{

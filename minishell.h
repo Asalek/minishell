@@ -104,5 +104,7 @@ t_list2	*echo_quotes(char *str);
 char	*cut_addlist(char *str, int j, int i, t_list2 **t);
 int		ret_between_quotes(char *str, int i);
 int		skip_n(char *str);
+char    *ft_strcutt(char    *str, int start, int end);
+char    **split_pipe(char *str);
 
 #endif

@@ -69,8 +69,13 @@ void	handl_line(char *cmd, t_data *t)
 	char	**cmd_split;
 
 	path = return_path(t->envp);
-	t->i = count_words(path, ':');
-	split_p = split_path(path);
+	split_p = NULL;
+	t->i = 0;
+	if (t->env_list)
+	{
+		split_p = split_path(path);
+		t->i = count_words(path, ':');
+	}
 	cmd_split = ft_split(cmd, ' ');
 	if (!cmd || !ft_strncmp(cmd, "", 1))
 		return ;
@@ -81,10 +86,7 @@ void	handl_line(char *cmd, t_data *t)
 	else if (!strncmp("./", cmd, 2) || !strncmp("/", cmd, 1))
 		execut_cmd("", cmd_split, cmd, t);
 	else if (cmd_found(t->i, split_p, cmd_split[0]) == 0)
-	{
-		printf("COMMAND NOT FOUND\n");
-		g_exit = 127;
-	}
+		command_not_found(127);
 	else
 		execute_path(t, split_p, cmd_split, cmd);
 }

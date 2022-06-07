@@ -37,6 +37,7 @@ char	*cmd_found(int count, char **split_p, char *cmd)
 		closedir(dir);
 		i++;
 	}
+	g_exit = 127;
 	return (0);
 }
 

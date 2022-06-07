@@ -86,7 +86,7 @@ void	handl_line(char *cmd, t_data *t)
 	else if (!strncmp("./", cmd, 2) || !strncmp("/", cmd, 1))
 		execut_cmd("", cmd_split, cmd, t);
 	else if (cmd_found(t->i, split_p, cmd_split[0]) == 0)
-		command_not_found(127);
+		printf("COMMAND NOT FOUND\n");
 	else
 		execute_path(t, split_p, cmd_split, cmd);
 }

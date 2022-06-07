@@ -95,12 +95,11 @@ int	check_line(char *str, t_data *t, t_echo *e)
 
 	e->l = 0;
 	e->i = 0;
-	if (!strncmp(str, "$", 1))
+	while (str[e->i] == ' ')
 	{
-		str++;
-		cmd = replace_arg_env(str, t);
-		handl_line(cmd, t);
-		return (0);
+		e->i++;
+		if (str[e->i == '\0'])
+			return (0);
 	}
 	if (ft_strlen(str) < 1)
 		return (0);

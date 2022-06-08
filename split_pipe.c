@@ -1,91 +1,97 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asalek <asalek@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/19 20:14:07 by asalek            #+#    #+#             */
+/*   Updated: 2022/05/31 12:48:49 by asalek           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-char    *ft_strcutt(char    *str, int start, int end)
+char	*ft_strcutt(char *str, int start, int end)
 {
-    int        i;
-    char    *string;
+	int		i;
+	char	*string;
 
-    i = start;
-    while (i < end)
-        i++;
-    string = malloc((end - i) + 1);
-    if (!str)
-        return (NULL);
-    i = 0;
-    while (start < end)
-    {
-        string[i] = str[start];
-        i++;
-        start++;
-    }
-    string[i] = '\0';
-    return (string);
+	i = start;
+	while (i < end)
+		i++;
+	string = malloc((end - i) + 1);
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (start < end)
+	{
+		string[i] = str[start];
+		i++;
+		start++;
+	}
+	string[i] = '\0';
+	return (string);
 }
 
-int count_pipes(char *str)
+int	count_pipes(char *str)
 {
-    int i;
-    int x;
+	int	i;
+	int	x;
 
-    i = 0;
-    x = 0;
-    while(str[i])
-    {
-        if(str[i] == '|')
-            x++;
-        i++;
-    }
-    return (x);
+	i = 0;
+	x = 0;
+	while (str[i])
+	{
+		if (str[i] == '|')
+			x++;
+		i++;
+	}
+	return (x);
 }
 
-int    quotes(char *str, int i)
+int	quotes(char *str, int i)
 {
-    if(str[i] == '\'')
-    {
-        i++;
-        while(str[i] != '\'')
-            i++;
-    }
-    else if (str[i] == '\"')
-    {
-        i++;
-        while(str[i] != '\"')
-            i++;
-    }
-    return (i);
+	if (str[i] == '\'')
+	{
+		i++;
+		while (str[i] != '\'')
+			i++;
+	}
+	else if (str[i] == '\"')
+	{
+		i++;
+		while (str[i] != '\"')
+			i++;
+	}
+	return (i);
 }
 
-char    **split_pipe(char *str)
+char	**split_pipe(char *str)
 {
-    int i;
-    int j;
-    int x;
-    char    **splitted;
+	t_echo	t;
 
-    i = 0;
-    x = 0;
-    j = 0;
-    splitted = (char **)malloc(sizeof(char *) * (count_pipes(str) + 2));
-    while(str[i])
-    {
-        if(str[i] == '\'' || str[i] == '\"')
-        {
-            i = quotes(str, i) + 1; 
-        }
-        if (str[i] == '|')
-        {
-            splitted[x] = ft_strcutt(str, j, i);
-            j = i + 1;
-            x++;
-        }
-        if (str[i + 1] == '\0')
-        {
-            splitted[x] = ft_strcutt(str, j, i + 1);
-            x++;
-            splitted[x] = NULL;
-        }
-        i++;
-    }
-    i = 0;
-    return (splitted);
+	t.i = 0;
+	t.l = 0;
+	t.j = 0;
+	t.alloc = (char **)malloc(sizeof(char *) * (count_pipes(str) + 2));
+	while (str[t.i])
+	{
+		if (str[t.i] == '\'' || str[t.i] == '\"')
+			t.i = quotes(str, t.i) + 1;
+		if (str[t.i] == '|')
+		{
+			t.alloc[t.l] = ft_strcutt(str, t.j, t.i);
+			t.j = t.i + 1;
+			t.l++;
+		}
+		if (str[t.i + 1] == '\0')
+		{
+			t.alloc[t.l] = ft_strcutt(str, t.j, t.i + 1);
+			t.l++;
+			t.alloc[t.l] = NULL;
+		}
+		t.i++;
+	}
+	return (t.alloc);
 }

@@ -65,7 +65,6 @@ int		check_if_is_echo(char *line);
 int		check_3(char *line, t_echo *e);
 int		check_2(char *line, t_echo *e, int i, t_data *t);
 int		check_1(char *line, t_echo *e, t_data *t);
-int		redairection_handle(char *line);
 int		check_qouts_echo(char *line, t_echo *e);
 int		hendl_1(char *str, int i);
 int		check_qouts(char *line, t_echo *e);

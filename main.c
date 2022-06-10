@@ -125,6 +125,8 @@ int	check_line(char *str, t_data *t, t_echo *e)
 			return (0);
 		e->i++;
 	}
+	while (*str == ' ')
+		str++;
 	if (ft_strlen(str) < 1)
 		return (0);
 	check_quots(str);

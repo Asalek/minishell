@@ -60,9 +60,8 @@ typedef struct echo_parssing{
 void	hendl_two(char *line, int i);
 void	hendl_one(char *line, int i);
 void	redairection_1(t_echo *e);
-char	*line_handle(char *line, t_echo *e, t_data *t);
+char	*line_handle(char *line, t_echo *e, t_data *t);//
 int		check_if_is_echo(char *line);
-int		check_3(char *line, t_echo *e);
 int		check_2(char *line, t_echo *e, int i, t_data *t);
 int		check_1(char *line, t_echo *e, t_data *t);
 int		check_qouts_echo(char *line, t_echo *e);

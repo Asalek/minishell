@@ -47,7 +47,7 @@ int	check_quots(char *cmd)
 	int		j;
 	char	c;
 
-	i = 0;
+	i = -1;
 	j = 0;
 	c = single_or_double(cmd[0]);
 	if (c != '\'' && c != '"')

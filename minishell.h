@@ -94,8 +94,6 @@ void	*pwd(void);
 void	ft_exit(void);
 void	exit_shell(int a);
 void	execute_path(t_data *t, char **split_p, char **cmd_split, char *cmd);
-int		check_single_quots(char *line, t_echo *e);
-int		check_double_quots(char *line, t_echo *e);
 t_list2	*echo_quotes(char *str);
 char	*cut_addlist(char *str, int j, int i, t_list2 **t);
 int		ret_between_quotes(char *str, int i);

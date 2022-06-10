@@ -37,24 +37,6 @@ int	check_2(char *line, t_echo *e, t_data *t)
 	return (1);
 }
 
-int	redairection_handle(char *line)
-{
-	int	r;
-
-	if (ft_strnstr(line, "echo", ft_strlen(line)))
-	{
-		r = check_if_is_echo(line);
-		if (r == 0)
-		{
-			printf("command not found\n");
-			return (0);
-		}
-	}
-	if (hendl_1(line, 0) == 0)
-		return (0);
-	return (1);
-}
-
 char	*line_handle(char *line, t_echo *e, t_data *t)
 {
 	if (ft_isthere(line, '|') == 1)

@@ -129,7 +129,11 @@ int	check_line(char *str, t_data *t, t_echo *e)
 		str++;
 	if (ft_strlen(str) < 1)
 		return (0);
-	check_quots(str);
+	if (check_quots(str) == 127)
+	{
+		g_exit = 127;
+		return(printf("Phoenix> command not found\n"), 0);
+	}
 	if (line_handle(str, e, t) == NULL)
 		return (0);
 	return (1);

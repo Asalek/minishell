@@ -41,7 +41,7 @@ char	single_or_double(char c)
 	return (a);
 }
 
-void	check_quots(char *cmd)
+int	check_quots(char *cmd)
 {
 	int		i;
 	int		j;
@@ -51,9 +51,9 @@ void	check_quots(char *cmd)
 	j = 0;
 	c = single_or_double(cmd[0]);
 	if (c != '\'' && c != '"')
-		return ;
+		return (0);
 	cmd[0] = ' ';
-	while (cmd[i])
+	while (cmd[++i])
 	{
 		if (cmd[i] == c)
 		{
@@ -63,7 +63,9 @@ void	check_quots(char *cmd)
 				i++;
 			}
 		}
-		i++;
+		else if (cmd[i] == ' ')
+			return (127);
 	}
 	cmd[i] = '\0';
+	return (0);
 }

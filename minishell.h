@@ -74,7 +74,7 @@ char	*replace_arg_env(char *str, t_data *t);
 char	*cmd_found(int count, char **split_p, char *cmd);
 void	execut_cmd(char *path, char **cmd, char *command, t_data *t);
 void	init_func(char **envp);
-void	check_quots(char *cmd);
+char	*check_quots(char *cmd);
 t_list2	*creat_list(char **str);
 t_list2	*ft_lstneww(char *v_name, char *v_value);
 void	ft_lstadd_backk(t_list2 **lst, t_list2 *new);

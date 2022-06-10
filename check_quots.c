@@ -30,24 +30,42 @@ void	exit_shell(int a)
 	}
 }
 
-void	check_quots(char *cmd)
+char	single_or_double(char c)
+{
+	char	a;
+
+	if (c == '\'')
+		a = '\'';
+	else if (c == '"')
+		a = '"';
+	return (a);
+}
+
+char	*check_quots(char *cmd)
 {
 	int		i;
+	int		j;
+	char	*str;
 	char	c;
-	int		len;
+	int		x;
 
-	len = ft_strlen(cmd);
-	i = 0;
-	if ((*cmd == '\"' && cmd[len - 1] == '\"')
-		|| (*cmd == '\'' && cmd[len - 1] == '\''))
+	c = single_or_double(cmd[0]);
+	if (c == '"' || c == '\'')
 	{
-		while (cmd[i])
-		{		
-			c = cmd[i + 1];
-			cmd[i] = c;
-			i++;
+		i = 0;
+		x = 1;
+		j = 0;
+		str = malloc(ft_strlen(cmd) - 1);
+		while (cmd[++i])
+		{
+			if (cmd[i] == c && x < 2)
+			{
+				i++;
+				x++;
+			}
+			str[j++] = cmd[i];
 		}
-		i--;
-		cmd[i - 1] = '\0';
+		str[j] = '\0';
 	}
+	return (str);
 }

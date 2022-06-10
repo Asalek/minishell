@@ -67,6 +67,7 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strcut(char	*str, int start, int end);
+char	*ft_strcpy(char *dest, char *src);
 
 //Bonus
 

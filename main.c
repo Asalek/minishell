@@ -105,7 +105,7 @@ int	check_line(char *str, t_data *t, t_echo *e)
 	}
 	if (ft_strlen(str) < 1)
 		return (0);
-	check_quots(str);
+	str = check_quots(str);
 	if (line_handle(str, e, t) == NULL)
 		return (0);
 	return (1);

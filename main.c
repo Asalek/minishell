@@ -121,7 +121,6 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, exit_shell);
 	signal(SIGINT, exit_shell);
 	e = malloc(sizeof(t_echo));
-	ft_strnstr(argv[0], ft_itoa(argc), 2);
 	list = creat_list(envp);
 	t.envp = envp;
 	t.env_list = list;

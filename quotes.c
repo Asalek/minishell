@@ -12,21 +12,6 @@
 
 #include "minishell.h"
 
-int	has_quotes(char *str)
-{
-	int	i;
-	int	len;
-
-	i = 0;
-	len = ft_strlen(str);
-	if (str[0] == '\'' && str[len - 1] == '\'')
-		return (1);
-	else if (str[0] == '\"' && str[len - 1] == '\"')
-		return (2);
-	else
-		return (0);
-}
-
 char	*replace_arg_env(char *str, t_data *t)
 {
 	t_list2	*p;

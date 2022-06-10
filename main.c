@@ -91,21 +91,43 @@ void	handl_line(char *cmd, t_data *t)
 		execute_path(t, split_p, cmd_split, cmd);
 }
 
+int	unclosed_quotes(char *str)
+{
+	int	i;
+	int	n;
+
+	i = 0;
+	n = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '"')
+			n++;
+		i++;
+	}
+	if (n % 2 != 0)
+		return (1);
+	else
+		return (0);
+}
+
 int	check_line(char *str, t_data *t, t_echo *e)
 {
-	char	*cmd;
-
 	e->l = 0;
 	e->i = 0;
-	while (str[e->i] == ' ')
+	if (unclosed_quotes(str) == 1)
 	{
-		e->i++;
-		if (str[e->i == '\0'])
+		g_exit = 130;
+		return (printf("invalid syntax quots\n"), 0);
+	}
+	while (str[e->i] && str[e->i] == ' ')
+	{
+		if (str[(e->i + 1)] == '\0')
 			return (0);
+		e->i++;
 	}
 	if (ft_strlen(str) < 1)
 		return (0);
-	str = check_quots(str);
+	check_quots(str);
 	if (line_handle(str, e, t) == NULL)
 		return (0);
 	return (1);

@@ -41,31 +41,59 @@ char	single_or_double(char c)
 	return (a);
 }
 
-char	*check_quots(char *cmd)
+// char	*check_quots(char *cmd)
+// {
+// 	int		i;
+// 	int		j;
+// 	char	*str;
+// 	char	c;
+// 	int		x;
+
+// 	c = single_or_double(cmd[0]);
+// 	if (c == '"' || c == '\'')
+// 	{
+// 		i = 0;
+// 		x = 1;
+// 		j = 0;
+// 		str = malloc(ft_strlen(cmd) + 1);
+// 		while (cmd[++i])
+// 		{
+// 			if (cmd[i] == c && x < 2)
+// 			{
+// 				i++;
+// 				x++;
+// 			}
+// 			str[j++] = cmd[i];
+// 		}
+// 		str[j] = '\0';
+// 	}
+// 	return (str);
+// }
+
+
+void	check_quots(char *cmd)
 {
 	int		i;
 	int		j;
-	char	*str;
 	char	c;
-	int		x;
 
+	i = 0;
+	j = 0;
 	c = single_or_double(cmd[0]);
-	if (c == '"' || c == '\'')
+	if (c != '\'' && c != '"')
+		return ;
+	cmd[0] = ' ';
+	while (cmd[i])
 	{
-		i = 0;
-		x = 1;
-		j = 0;
-		str = malloc(ft_strlen(cmd) - 1);
-		while (cmd[++i])
+		if (cmd[i] == c)
 		{
-			if (cmd[i] == c && x < 2)
+			while (cmd[i])
 			{
+				cmd[i] = cmd[i + 1];
 				i++;
-				x++;
 			}
-			str[j++] = cmd[i];
 		}
-		str[j] = '\0';
+		i++;
 	}
-	return (str);
+	cmd[i] = '\0';
 }

@@ -37,7 +37,6 @@ int	check_3(char *line, t_echo *e)
 
 int	check_2(char *line, t_echo *e, int i, t_data *t)
 {
-	//e->parssing = ft_split(line, '|');
 	e->parssing = split_pipe(line);
 	if (!ft_strncmp(e->parssing[0], "", 1)
 		|| !ft_strncmp(e->parssing[0], " ", 1))
@@ -74,7 +73,7 @@ int	check_2(char *line, t_echo *e, int i, t_data *t)
 
 int	check_1(char *line, t_echo *e, t_data *t)
 {
-	if (ft_strnstr(line, "|", ft_strlen(line)))
+	if (ft_isthere(line, '|') == 1)
 	{
 		if (check_2(line, e, 0, t) == 0)
 			return (0);
@@ -114,36 +113,8 @@ char	*line_handle(char *line, t_echo *e, t_data *t)
 	if (check_1(line, e, t) == 0)
 		return (0);
 	i = 0;
-	if (ft_strnstr(line, "|", ft_strlen(line)))
-	{
-		while (e->parssing[i])
-		{
-			if (ft_strnstr(e->parssing[i], ">", ft_strlen(line))
-				|| ft_strnstr(e->parssing[i], "<", ft_strlen(line))
-				|| ft_strnstr(line, "echo", ft_strlen(line)))
-				if (redairection_handle(e->parssing[i]) == 0)
-					return (0);
-			i++;
-		}
-		i = 0;
-		while (e->parssing[i])
-		{
-			if (ft_strnstr(e->parssing[i], ">", ft_strlen(line) == 0)
-				&& ft_strnstr(e->parssing[i], "<", ft_strlen(line) == 0)
-				&& ft_strnstr(line, "echo", ft_strlen(line) == 0))
-				handl_line(e->parssing[i], t);
-			else if (ft_strnstr(e->parssing[i], ">", ft_strlen(line))
-				|| ft_strnstr(e->parssing[i], "<", ft_strlen(line))
-				|| ft_strnstr(line, "echo", ft_strlen(line)))
-				redairection_1(e);
-			i++;
-		}
-	}
-	else
-	{
-		if (redairection_handle(line) == 0)
-			return (0);
-		handl_line(line, t);
-	}
+	if (redairection_handle(line) == 0)
+		return (0);
+	handl_line(line, t);
 	return ("ok");
 }

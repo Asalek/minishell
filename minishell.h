@@ -62,8 +62,7 @@ void	hendl_one(char *line, int i);
 void	redairection_1(t_echo *e);
 char	*line_handle(char *line, t_echo *e, t_data *t);//
 int		check_if_is_echo(char *line);
-int		check_2(char *line, t_echo *e, int i, t_data *t);
-int		check_1(char *line, t_echo *e, t_data *t);
+int		check_2(char *line, t_echo *e, t_data *t);
 int		check_qouts_echo(char *line, t_echo *e);
 int		hendl_1(char *str, int i);
 int		check_qouts(char *line, t_echo *e);
@@ -103,5 +102,6 @@ int		ret_between_quotes(char *str, int i);
 int		skip_n(char *str);
 char    *ft_strcutt(char    *str, int start, int end);
 char    **split_pipe(char *str);
+void	remove_spaces(char *str);
 
 #endif

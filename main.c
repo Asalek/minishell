@@ -67,6 +67,7 @@ void	handl_line(char *cmd, t_data *t)
 	char	*path;
 	char	**split_p;
 	char	**cmd_split;
+	int		i;
 
 	path = return_path(t->envp);
 	split_p = NULL;
@@ -77,6 +78,13 @@ void	handl_line(char *cmd, t_data *t)
 		t->i = count_words(path, ':');
 	}
 	cmd_split = ft_split(cmd, ' ');
+	i = 1;
+	while (cmd_split[i])
+	{
+		check_quots(cmd_split[i]);
+		remove_spaces(cmd_split[i]);
+		i++;
+	}
 	if (!cmd || !ft_strncmp(cmd, "", 1))
 		return ;
 	while (*cmd == ' ')

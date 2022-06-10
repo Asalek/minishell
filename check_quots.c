@@ -53,6 +53,7 @@ int	check_quots(char *cmd)
 	if (c != '\'' && c != '"')
 		return (0);
 	cmd[0] = ' ';
+	cmd++;
 	while (cmd[++i])
 	{
 		if (cmd[i] == c)

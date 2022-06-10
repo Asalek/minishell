@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	check_2(char *line, t_echo *e, int i, t_data *t)
+int	check_2(char *line, t_echo *e, t_data *t)
 {
 	e->parssing = split_pipe(line);
 	if (!ft_strncmp(e->parssing[0], "", 1)
@@ -23,7 +23,10 @@ int	check_2(char *line, t_echo *e, int i, t_data *t)
 	}
 	e->len = 0;
 	while (e->parssing[e->len])
+	{
+		check_quots(e->parssing[e->len]);
 		e->len++;
+	}	
 	if (e->len > 1)
 		pipee(e, t);
 	else
@@ -31,15 +34,6 @@ int	check_2(char *line, t_echo *e, int i, t_data *t)
 		g_exit = 258;
 		return (printf("Phoenix: syntax error near unexpected token `|'\n"), 0);
 	}
-	return (1);
-}
-
-int	check_1(char *line, t_echo *e, t_data *t)
-{
-	if (check_2(line, e, 0, t) == 0)
-		return (0);
-	else
-		return (1);
 	return (1);
 }
 
@@ -65,8 +59,8 @@ char	*line_handle(char *line, t_echo *e, t_data *t)
 {
 	if (ft_isthere(line, '|') == 1)
 	{
-		if (check_1(line, e, t) == 0)
-		return (0);	
+		if (check_2(line, e, t) == 0)
+			return (0);
 	}
 	else if (ft_isthere(line, '|') == 0)
 		handl_line(line, t);

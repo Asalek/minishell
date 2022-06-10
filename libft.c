@@ -30,3 +30,23 @@ size_t	count_words(char const *s, char c)
 	}
 	return (count);
 }
+
+void	remove_spaces(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == ' ')
+		{
+			while (str[i])
+			{
+				str[i] = str[i + 1];
+				i++;
+			}
+		}
+		i++;
+	}
+	str[i] = '\0';
+}

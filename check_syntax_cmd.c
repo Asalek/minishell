@@ -108,13 +108,9 @@ int	redairection_handle(char *line)
 
 char	*line_handle(char *line, t_echo *e, t_data *t)
 {
-	int	i;
-
 	if (check_1(line, e, t) == 0)
 		return (0);
-	i = 0;
-	if (redairection_handle(line) == 0)
-		return (0);
-	handl_line(line, t);
+	else if (ft_isthere(line, '|') == 0)
+		handl_line(line, t);
 	return ("ok");
 }

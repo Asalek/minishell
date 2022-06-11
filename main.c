@@ -103,16 +103,22 @@ int	unclosed_quotes(char *str)
 {
 	int	i;
 	int	n;
+	int	s;
 
 	i = 0;
 	n = 0;
+	s = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'' || str[i] == '"')
+		if (str[i] == '\'')
 			n++;
+		else if (str[i] == '"')
+			s++;
 		i++;
 	}
 	if (n % 2 != 0)
+		return (1);
+	if (s % 2 != 0)
 		return (1);
 	else
 		return (0);

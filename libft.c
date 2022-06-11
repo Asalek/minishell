@@ -36,6 +36,8 @@ void	remove_spaces(char *str)
 	int	i;
 
 	i = 0;
+	if (str[0] == ' ' && ft_strlen(str) < 2) // ""
+		return ;	
 	while (str[i])
 	{
 		if (str[i] == ' ')

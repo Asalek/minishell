@@ -37,14 +37,44 @@ int	check_2(char *line, t_echo *e, t_data *t)
 	return (1);
 }
 
+int	pipe_syntax(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '|')
+		{
+			i++;
+			if (str[i] == '|')
+				return (printf("Phoenix: syntax error near unexpected token `|'\n"), 0);
+			while (str[i] == ' ')
+			{
+				if (str[i + 1] == '|' || str[i + 1] == '\0')
+					return (printf("Phoenix: syntax error near unexpected token `|'\n"), 0);
+				else
+					i++;
+			}
+			if (str[i] == '\0')
+				return (printf("Phoenix: syntax error near unexpected token `|'\n"), 0);
+
+		}
+		i++;
+	}
+	return (1);
+}
+
 char	*line_handle(char *line, t_echo *e, t_data *t)
 {
-	if (ft_isthere(line, '|') == 1)
+	if (ft_isthere(line, '|') == 1) 
 	{
+		if (!pipe_syntax(line))
+			return (0);
 		if (check_2(line, e, t) == 0)
 			return (0);
 	}
-	else if (ft_isthere(line, '|') == 0)
+	else if (ft_isthere(line, '|') == 0) //&& pipe outside qutes
 		handl_line(line, t);
 	return ("ok");
 }

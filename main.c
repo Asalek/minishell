@@ -148,7 +148,7 @@ int	check_line(char *str, t_data *t, t_echo *e)
 		g_exit = 127;
 		return(printf("Phoenix> command not found\n"), 0);
 	}
-	if (str[0] == ' ')
+	if (str[0] == ' ' && ft_strlen(str) < 2)
 		return (printf("command not found\n"), g_exit = 127, 0);
 	if (line_handle(str, e, t) == NULL)
 		return (0);

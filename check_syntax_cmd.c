@@ -44,6 +44,7 @@ int	pipe_syntax(char *str)
 	i = 0;
 	while (str[i])
 	{
+		i = quotes(str, i);
 		if (str[i] == '|')
 		{
 			i++;

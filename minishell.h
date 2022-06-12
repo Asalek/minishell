@@ -101,7 +101,7 @@ int		skip_n(char *str);
 char    *ft_strcutt(char    *str, int start, int end);
 char    **split_pipe(char *str);
 void	remove_spaces(char *str);
-
-int check_pipe_inside_quotes(char *str);
+int		quotes(char *str, int i);
+int		check_pipe_inside_quotes(char *str);
 
 #endif

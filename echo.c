@@ -89,7 +89,7 @@ int	replace_word(char *str, int i, t_data *t)
 		ft_putstr_fd(replace_arg_env(s, t), 1);
 	}
 	else
-		printf("%c", str[i]);
+		ft_putchar_fd(str[i], 1);
 	return (i);
 }
 

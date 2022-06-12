@@ -102,4 +102,6 @@ char    *ft_strcutt(char    *str, int start, int end);
 char    **split_pipe(char *str);
 void	remove_spaces(char *str);
 
+int check_pipe_inside_quotes(char *str);
+
 #endif

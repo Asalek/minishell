@@ -67,14 +67,14 @@ int	pipe_syntax(char *str)
 
 char	*line_handle(char *line, t_echo *e, t_data *t)
 {
-	if (ft_isthere(line, '|') == 1) 
+	if (ft_isthere(line, '|') == 1 && check_pipe_inside_quotes(line)) 
 	{
 		if (!pipe_syntax(line))
 			return (0);
 		if (check_2(line, e, t) == 0)
 			return (0);
 	}
-	else if (ft_isthere(line, '|') == 0) //&& pipe outside qutes
+	else
 		handl_line(line, t);
 	return ("ok");
 }

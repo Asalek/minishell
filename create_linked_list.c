@@ -52,6 +52,9 @@ t_list2	*creat_list(char **str)
 	{
 		splited = ft_split(str[i], '=');
 		ft_lstadd_backk(&p, ft_lstneww(splited[0], splited[1]));
+		free(splited[0]);
+		free(splited[1]);
+		free(splited);
 		i++;
 	}
 	return (p);

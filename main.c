@@ -77,6 +77,7 @@ void	handl_line(char *cmd, t_data *t)
 		split_p = split_path(path);
 		t->i = count_words(path, ':');
 	}
+	free(path);
 	cmd_split = ft_split(cmd, ' ');
 	i = 1;
 	while (cmd_split[i])
@@ -161,6 +162,7 @@ int	main(int argc, char **argv, char **envp)
 	t_list2	*list;
 	t_data	t;
 	t_echo	*e;
+	t_list2	*tmp;
 
 	signal(SIGQUIT, exit_shell);
 	signal(SIGINT, exit_shell);
@@ -168,6 +170,7 @@ int	main(int argc, char **argv, char **envp)
 	list = creat_list(envp);
 	t.envp = envp;
 	t.env_list = list;
+
 	line = readline(PROMPT);
 	while (line)
 	{
@@ -177,4 +180,11 @@ int	main(int argc, char **argv, char **envp)
 		free(line);
 		line = readline(PROMPT);
 	}
+
+	while (list)
+	{
+		tmp = list;
+		list = list->next;
+		free(tmp);
+	}	
 }

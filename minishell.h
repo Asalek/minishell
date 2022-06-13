@@ -104,4 +104,8 @@ void	remove_spaces(char *str);
 int		quotes(char *str, int i);
 int		check_pipe_inside_quotes(char *str);
 
+//free
+
+void	free_doublepointer(char **ptr);
+
 #endif

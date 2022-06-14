@@ -17,7 +17,7 @@ int	more_built_in(char **cmd, t_data *t)
 	if (!ft_strcmp(cmd[0], "export"))
 	{
 		export(cmd[1], t);
-		return (1);
+		return (free_doublepointer(cmd), 1);
 	}
 	if (!ft_strcmp(cmd[0], "unset"))
 	{
@@ -25,10 +25,10 @@ int	more_built_in(char **cmd, t_data *t)
 		{
 			printf("unset: not enough arguments\n");
 			g_exit = 1;
-			return (1);
+			return (free_doublepointer(cmd), 1);
 		}
 		unset(cmd[1], t);
-		return (1);
+		return (free_doublepointer(cmd), 1);
 	}
 	else
 		return (0);
@@ -39,24 +39,24 @@ int	built_in_functions(char **cmd, t_data *t, char *cmdline)
 	if (!ft_strcmp(cmd[0], "cd"))
 	{
 		cd(cmd[1], t->envp);
-		return (1);
+		return (free_doublepointer(cmd), 1);
 	}
 	if (!ft_strcmp(cmd[0], "pwd"))
 	{
-		printf("%s\n", pwd());
-		return (1);
+		pwd();
+		return (free_doublepointer(cmd), 1);
 	}
 	if (!ft_strcmp(cmd[0], "exit"))
 		ft_exit();
 	if (!ft_strcmp(cmd[0], "echo"))
 	{
 		ft_echo(cmdline, t);
-		return (1);
+		return (free_doublepointer(cmd), 1);
 	}
 	if (!ft_strcmp(cmd[0], "env"))
 	{
 		ft_env(t);
-		return (1);
+		return (free_doublepointer(cmd), 1);
 	}
 	else
 		return (more_built_in(cmd, t));

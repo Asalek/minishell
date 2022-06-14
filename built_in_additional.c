@@ -47,19 +47,19 @@ char	*cut_addlist(char *str, int j, int i, t_list2 **t)
 {
 	char	*arg;
 
-	arg = ft_strcut(str, j, i);
-	ft_lstadd_backk(t, ft_lstneww(arg, arg));
+	ft_lstadd_backk(t, ft_lstneww(ft_strcut(str, j, i), ft_strcut(str, j, i)));
 	return (arg);
 }
 
-void	*pwd(void)
+void	pwd(void)
 {
 	char	*str;
 
 	str = malloc(100);
 	str = getcwd(str, 100);
+	printf("%s\n", str);
 	g_exit = 0;
-	return (str);
+	free_pointer(str);
 }
 
 void	ft_exit(void)

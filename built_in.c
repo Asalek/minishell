@@ -38,6 +38,7 @@ void	cd(char *str, char **envp)
 		printf("cd: no such file or directory: %s\n", str);
 		g_exit = 1;
 	}
+	free_pointer(path);
 }
 
 void	ft_env(t_data *t)

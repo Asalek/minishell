@@ -37,6 +37,7 @@ t_list2	*echo_quotes(char *str)
 		}	
 		i++;
 	}
+	// free_pointer(arg);
 	return (t);
 }
 
@@ -87,6 +88,7 @@ int	replace_word(char *str, int i, t_data *t)
 		}
 		s[j] = '\0';
 		ft_putstr_fd(replace_arg_env(s, t), 1);
+		free(s);
 	}
 	else
 		ft_putchar_fd(str[i], 1);
@@ -125,19 +127,24 @@ void	ft_echo(char *str, t_data *t)
 {
 	int		n;
 	t_list2	*p;
+	t_list2	*ptr;
+	char	*str_e;
 
 	n = 0;
 	if (!ft_strncmp(str, "echo ", 5))
 		str = ft_strcut(str, 5, ft_strlen(str));
 	n = skip_n(str);
-	str = ft_strcut(str, n, ft_strlen(str));
-	p = echo_quotes(str);
-	while (p)
+	str_e = ft_strcut(str, n, ft_strlen(str));
+	p = echo_quotes(str_e);
+	ptr = p;
+	while (ptr)
 	{
-		echo_exec(p->value, str, t);
-		p = p->next;
+		echo_exec(ptr->value, str_e, t);
+		ptr = ptr->next;
 	}
 	if (n == 0)
 		printf("\n");
+	free_all(str, NULL, p);
+	free_all(str_e, NULL, NULL);
 	g_exit = 0;
 }

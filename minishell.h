@@ -90,7 +90,7 @@ void	ft_env(t_data *t);
 void	unset(char *arg, t_data *t);
 void	export(char *arg, t_data *t);
 void	cd(char *str, char **envp);
-void	*pwd(void);
+void	pwd(void);
 void	ft_exit(void);
 void	exit_shell(int a);
 void	execute_path(t_data *t, char **split_p, char **cmd_split, char *cmd);
@@ -107,5 +107,7 @@ int		check_pipe_inside_quotes(char *str);
 //free
 
 void	free_doublepointer(char **ptr);
+void	free_pointer(char *str);
+void	free_all(char *str, char **tab, t_list2 *t);
 
 #endif

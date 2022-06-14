@@ -23,7 +23,7 @@ char	*cmd_found(int count, char **split_p, char *cmd)
 	{
 		dir = opendir(split_p[i]);
 		if (dir == NULL)
-			return (NULL);
+			return (free_doublepointer(split_p), NULL);
 		else
 		{
 			entry = readdir(dir);
@@ -38,6 +38,7 @@ char	*cmd_found(int count, char **split_p, char *cmd)
 		i++;
 	}
 	g_exit = 127;
+	free_doublepointer(split_p);
 	return (0);
 }
 
@@ -65,6 +66,11 @@ void	execut_cmd(char *path, char **cmd, char *command, t_data *t)
 			exit(0);
 	}
 	else
+	{
 		wait(&i);
+		free_all(path, cmd, NULL);
+		free(parmlist);
+		free_all(full_path, NULL, NULL);
+	}
 	g_exit = WEXITSTATUS(i);
 }

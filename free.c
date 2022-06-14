@@ -20,6 +20,8 @@ void	free_doublepointer(char **ptr)
 
 void	free_pointer(char *str)
 {
+	if (!str || !str[0] || str == NULL || str[0] == '\0')
+		return ;
 	if (str)
 	{
 		free(str);

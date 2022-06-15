@@ -66,7 +66,6 @@ void	handl_line(char *cmd, t_data *t)
 {
 	char	*path;
 	char	**cmd_split;
-	int		i;
 
 	path = return_path(t->envp);
 	t->split_path = NULL;
@@ -77,13 +76,7 @@ void	handl_line(char *cmd, t_data *t)
 		t->i = count_words(path, ':');
 	}
 	cmd_split = ft_split(cmd, ' ');
-	i = 1;
-	while (cmd_split[i])
-	{
-		check_quots(cmd_split[i]);
-		remove_spaces(cmd_split[i]);
-		i++;
-	}
+	remove_space_quotes(cmd_split);
 	if (!cmd || !ft_strncmp(cmd, "", 1))
 		return ;
 	while (*cmd == ' ')
@@ -96,31 +89,6 @@ void	handl_line(char *cmd, t_data *t)
 		printf("COMMAND NOT FOUND\n");
 	else
 		execute_path(t, t->split_path, cmd_split, cmd);
-}
-
-int	unclosed_quotes(char *str)
-{
-	int	i;
-	int	n;
-	int	s;
-
-	i = 0;
-	n = 0;
-	s = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'')
-			n++;
-		else if (str[i] == '"')
-			s++;
-		i++;
-	}
-	if (n % 2 != 0)
-		return (1);
-	if (s % 2 != 0)
-		return (1);
-	else
-		return (0);
 }
 
 int	check_line(char *str, t_data *t, t_echo *e)
@@ -143,10 +111,7 @@ int	check_line(char *str, t_data *t, t_echo *e)
 	if (ft_strlen(str) < 1)
 		return (0);
 	if (check_quots(str) == 127)
-	{
-		g_exit = 127;
-		return(printf("Phoenix> command not found\n"), 0);
-	}
+		return (g_exit = 127, printf("Phoenix> command not found\n"), 0);
 	if (str[0] == ' ' && ft_strlen(str) < 2)
 		return (printf("command not found\n"), g_exit = 127, 0);
 	if (line_handle(str, e, t) == NULL)
@@ -160,7 +125,6 @@ int	main(int argc, char **argv, char **envp)
 	t_list2	*list;
 	t_data	t;
 	t_echo	*e;
-	t_list2	*tmp;
 
 	(void)argc;
 	(void)argv;
@@ -179,11 +143,4 @@ int	main(int argc, char **argv, char **envp)
 		free(line);
 		line = readline(PROMPT);
 	}
-
-	while (list)
-	{
-		tmp = list;
-		list = list->next;
-		free(tmp);
-	}	
 }

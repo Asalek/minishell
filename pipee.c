@@ -79,6 +79,7 @@ void	pipe_closing(int *fd, int len)
 		close(fd[i]);
 		i++;
 	}
+	free(fd);
 }
 
 void	wait_for_childs(int len, int pid)
@@ -120,6 +121,5 @@ void	pipee(t_echo *e, t_data *t)
 		e->j += 2;
 	}
 	pipe_closing(fd, count(e->parssing));
-	free(fd);
 	wait_for_childs(count(e->parssing), t->pid);
 }

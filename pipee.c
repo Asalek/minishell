@@ -37,16 +37,15 @@ void	execut_cmdd(char *path, char **cmd, char *command, t_data *t)
 void	handl_linee(char *cmd, t_data *t)
 {
 	char	*path;
-	char	**split_p;
 	char	*full_path;
 	char	**cmd_split;
 	int		i;
 
 	path = return_path(t->envp);
 	t->bool_fd = count_words(path, ':');
-	split_p = split_path(path);
+	t->split_path = split_path(path);
 	cmd_split = ft_split(cmd, ' ');
-	full_path = cmd_found(t->bool_fd, split_p, cmd_split);
+	full_path = cmd_found(t->bool_fd, t->split_path, cmd_split);
 	if (!cmd || !ft_strncmp(cmd, "", 1))
 		return ;
 	while (*cmd == ' ')
@@ -66,8 +65,7 @@ void	handl_linee(char *cmd, t_data *t)
 		execut_cmdd("", cmd_split, cmd, t);
 	else if (full_path == 0)
 		command_not_found(0);
-	else
-		full_path = concatenate_string(full_path, "/");
+	full_path = concatenate_string(full_path, "/");
 	execut_cmdd(full_path, cmd_split, cmd, t);
 }
 
@@ -122,5 +120,6 @@ void	pipee(t_echo *e, t_data *t)
 		e->j += 2;
 	}
 	pipe_closing(fd, count(e->parssing));
+	free(fd);
 	wait_for_childs(count(e->parssing), t->pid);
 }

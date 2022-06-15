@@ -76,7 +76,6 @@ void	handl_line(char *cmd, t_data *t)
 		t->split_path = split_path(path);
 		t->i = count_words(path, ':');
 	}
-	free_pointer(path);
 	cmd_split = ft_split(cmd, ' ');
 	i = 1;
 	while (cmd_split[i])

@@ -19,6 +19,7 @@ char	**split_path(char *string)
 	if (string == NULL)
 		return (NULL);
 	path = ft_split(string, ':');
+	free_pointer(string);
 	return (path);
 }
 

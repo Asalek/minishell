@@ -68,9 +68,9 @@ void	execut_cmd(char *path, char **cmd, char *command, t_data *t)
 	else
 	{
 		wait(&i);
+		free_all(full_path, NULL, NULL);
 		free_all(path, cmd, NULL);
 		free(parmlist);
-		free_all(full_path, NULL, NULL);
 	}
 	g_exit = WEXITSTATUS(i);
 }

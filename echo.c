@@ -100,6 +100,7 @@ void	echo_exec(char *p, char *str, t_data *t)
 	int		j;
 
 	j = 0;
+	(void)str;
 	while (p[j] != '\0')
 	{
 		if (p[j] == '\'')

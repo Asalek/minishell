@@ -18,6 +18,7 @@ void	cd(char *str, char **envp)
 	char	*path;
 
 	g_exit = 0;
+	path = NULL;
 	i = 0;
 	if (!str)
 	{

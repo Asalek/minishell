@@ -34,6 +34,7 @@ char	single_or_double(char c)
 {
 	char	a;
 
+	a = 'a';
 	if (c == '\'')
 		a = '\'';
 	else if (c == '"')

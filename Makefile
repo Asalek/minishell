@@ -24,13 +24,14 @@ endif
 
 NAME = minishell
 CC = cc
+SEGFAULT = -fsanitize=address
 CFLAGS = -Wall -Wextra -Werror
 SRC = main.c check_path.c excute_cmd.c built_in.c libft.c create_linked_list.c check_syntax_cmd.c \
 quotes.c pipee.c pipe.c check_quots.c built_in_additional.c echo.c split_pipe.c \
 check_pipe.c free.c
 
 OBJ = $(SRC:.c=.o)
-CFLAGS := -g -I /goinfre/${USER}/.brew/opt/readline/include -D BUFFER_SIZE=1
+CFLAGS += -g -I /goinfre/${USER}/.brew/opt/readline/include -D BUFFER_SIZE=1
 LDFLAGS := -L /goinfre/${USER}/.brew/opt/readline/lib
 
 all: $(NAME)

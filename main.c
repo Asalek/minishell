@@ -162,13 +162,14 @@ int	main(int argc, char **argv, char **envp)
 	t_echo	*e;
 	t_list2	*tmp;
 
+	(void)argc;
+	(void)argv;
 	signal(SIGQUIT, exit_shell);
 	signal(SIGINT, exit_shell);
 	e = malloc(sizeof(t_echo));
 	list = creat_list(envp);
 	t.envp = envp;
 	t.env_list = list;
-
 	line = readline(PROMPT);
 	while (line)
 	{

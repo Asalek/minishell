@@ -47,6 +47,7 @@ char	*cut_addlist(char *str, int j, int i, t_list2 **t)
 {
 	char	*arg;
 
+	arg = NULL;
 	ft_lstadd_backk(t, ft_lstneww(ft_strcut(str, j, i), ft_strcut(str, j, i)));
 	return (arg);
 }

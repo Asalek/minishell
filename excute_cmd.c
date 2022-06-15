@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*cmd_found(int count, char **split_p, char *cmd)
+char	*cmd_found(int count, char **split_p, char **cmd)
 {
 	int				i;
 	DIR				*dir;
@@ -23,14 +23,17 @@ char	*cmd_found(int count, char **split_p, char *cmd)
 	{
 		dir = opendir(split_p[i]);
 		if (dir == NULL)
-			return (free_doublepointer(split_p), NULL);
+			return (free_doublepointer(split_p), free_doublepointer(cmd), NULL);
 		else
 		{
 			entry = readdir(dir);
 			while (entry != NULL)
 			{
-				if (ft_strcmp(entry->d_name, cmd) == 0)
+				if (ft_strcmp(entry->d_name, cmd[0]) == 0)
+				{
+					closedir(dir);
 					return (split_p[i]);
+				}
 				entry = readdir(dir);
 			}
 		}
@@ -38,8 +41,7 @@ char	*cmd_found(int count, char **split_p, char *cmd)
 		i++;
 	}
 	g_exit = 127;
-	free_doublepointer(split_p);
-	return (0);
+	return (free_doublepointer(split_p), free_doublepointer(cmd), NULL);
 }
 
 void	execut_cmd(char *path, char **cmd, char *command, t_data *t)

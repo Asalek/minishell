@@ -67,7 +67,7 @@ int		check_qouts_echo(char *line, t_echo *e);
 int		hendl_1(char *str, int i);
 int		check_qouts(char *line, t_echo *e);
 char	*replace_arg_env(char *str, t_data *t);
-char	*cmd_found(int count, char **split_p, char *cmd);
+char	*cmd_found(int count, char **split_p, char **cmd);
 void	execut_cmd(char *path, char **cmd, char *command, t_data *t);
 void	init_func(char **envp);
 int		check_quots(char *cmd);

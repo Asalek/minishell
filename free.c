@@ -7,6 +7,8 @@ void	free_doublepointer(char **ptr)
 	int	i;
 
 	i = 0;
+	if (!ptr || !ptr[0] || ptr == NULL || ptr[0][0] == '\0')
+		return ;	
 	if (ptr)
 	{	
 		while (ptr[i])

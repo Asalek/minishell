@@ -46,7 +46,7 @@ void	handl_linee(char *cmd, t_data *t)
 	t->bool_fd = count_words(path, ':');
 	split_p = split_path(path);
 	cmd_split = ft_split(cmd, ' ');
-	full_path = cmd_found(t->bool_fd, split_p, cmd_split[0]);
+	full_path = cmd_found(t->bool_fd, split_p, cmd_split);
 	if (!cmd || !ft_strncmp(cmd, "", 1))
 		return ;
 	while (*cmd == ' ')

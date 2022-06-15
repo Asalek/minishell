@@ -34,7 +34,7 @@ int	check_2(char *line, t_echo *e, t_data *t)
 		g_exit = 258;
 		return (printf("Phoenix: syntax error near unexpected token `|'\n"), 0);
 	}
-	free_doublepointer(e->parssing);
+	free_dp(e->parssing);
 	return (1);
 }
 

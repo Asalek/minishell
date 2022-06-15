@@ -39,7 +39,6 @@ void	handl_linee(char *cmd, t_data *t)
 	char	*path;
 	char	*full_path;
 	char	**cmd_split;
-	int		i;
 
 	path = return_path(t->envp);
 	t->bool_fd = count_words(path, ':');
@@ -50,13 +49,7 @@ void	handl_linee(char *cmd, t_data *t)
 		return ;
 	while (*cmd == ' ')
 		cmd++;
-	i = 1;
-	while (cmd_split[i])
-	{
-		check_quots(cmd_split[i]);
-		remove_spaces(cmd_split[i]);
-		i++;
-	}
+	remove_space_quotes(cmd_split);
 	if (built_in_functions(cmd_split, t, cmd))
 		exit(0);
 	else if (!strncmp("./", cmd, 2))

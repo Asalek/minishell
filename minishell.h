@@ -99,15 +99,16 @@ t_list2	*echo_quotes(char *str);
 char	*cut_addlist(char *str, int j, int i, t_list2 **t);
 int		ret_between_quotes(char *str, int i);
 int		skip_n(char *str);
-char    *ft_strcutt(char    *str, int start, int end);
-char    **split_pipe(char *str);
+char	*ft_strcutt(char *str, int start, int end);
+char	**split_pipe(char *str);
 void	remove_spaces(char *str);
 int		quotes(char *str, int i);
 int		check_pipe_inside_quotes(char *str);
+void	remove_space_quotes(char **cmd_split);
 
 //free
 
-void	free_doublepointer(char **ptr);
+void	free_dp(char **ptr);
 void	free_pointer(char *str);
 void	free_all(char *str, char **tab, t_list2 *t);
 

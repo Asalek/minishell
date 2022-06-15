@@ -2,7 +2,7 @@
 #include "minishell.h"
 
 
-void	free_doublepointer(char **ptr)
+void	free_dp(char **ptr)
 {
 	int	i;
 
@@ -35,7 +35,7 @@ void	free_all(char *str, char **tab, t_list2 *t)
 	t_list2	*p;
 
 	free_pointer(str);
-	free_doublepointer(tab);
+	free_dp(tab);
 	while (t)
 	{
 		p = t;

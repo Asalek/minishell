@@ -52,3 +52,16 @@ void	remove_spaces(char *str)
 	}
 	str[i] = '\0';
 }
+
+void	remove_space_quotes(char **cmd_split)
+{
+	int	i;
+
+	i = 1;
+	while (cmd_split[i])
+	{
+		check_quots(cmd_split[i]);
+		remove_spaces(cmd_split[i]);
+		i++;
+	}
+}

@@ -37,5 +37,5 @@ void	execute_path(t_data *t, char **split_p, char **cmd_split, char *cmd)
 	full_path = cmd_found(t->i, split_p, cmd_split);
 	full_path = concatenate_string(full_path, "/");
 	execut_cmd(full_path, cmd_split, cmd, t);
-	free_doublepointer(split_p);
+	free_dp(split_p);
 }

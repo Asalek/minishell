@@ -30,10 +30,7 @@ char	*cmd_found(int count, char **split_p, char **cmd)
 			while (entry != NULL)
 			{
 				if (ft_strcmp(entry->d_name, cmd[0]) == 0)
-				{
-					closedir(dir);
-					return (split_p[i]);
-				}
+					return (closedir(dir), split_p[i]);
 				entry = readdir(dir);
 			}
 		}
@@ -48,31 +45,27 @@ void	execut_cmd(char *path, char **cmd, char *command, t_data *t)
 {
 	char	*full_path;
 	int		word_count;
-	int		i;
 	char	**parmlist;
 
 	full_path = ft_strjoin(path, cmd[0]);
 	word_count = count_words(command, ' ');
-	i = 0;
+	t->i = -1;
 	parmlist = malloc(sizeof(char *) * word_count + 1);
-	while (i < word_count)
-	{
-		parmlist[i] = cmd[i];
-		i++;
-	}
-	parmlist[i] = NULL;
-	i = fork();
-	if (i == 0)
+	while (++t->i < word_count)
+		parmlist[t->i] = cmd[t->i];
+	parmlist[t->i] = NULL;
+	t->i = fork();
+	if (t->i == 0)
 	{
 		if (execve(full_path, parmlist, t->envp) == -1)
 			exit(0);
 	}
 	else
 	{
-		wait(&i);
+		wait(&t->i);
 		free_all(full_path, NULL, NULL);
 		free_all(path, cmd, NULL);
 		free(parmlist);
 	}
-	g_exit = WEXITSTATUS(i);
+	g_exit = WEXITSTATUS(t->i);
 }

@@ -31,6 +31,7 @@ int	g_exit;
 typedef struct s_data
 {
 	char				**envp;
+	char				**split_path;
 	struct s_linkedlist	*env_list;
 	int					bool_fd;
 	pid_t				pid;

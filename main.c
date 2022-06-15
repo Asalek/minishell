@@ -17,7 +17,7 @@ int	more_built_in(char **cmd, t_data *t)
 	if (!ft_strcmp(cmd[0], "export"))
 	{
 		export(cmd[1], t);
-		return (free_doublepointer(cmd), 1);
+		return (free_doublepointer(cmd), free_doublepointer(t->split_path), 1);
 	}
 	if (!ft_strcmp(cmd[0], "unset"))
 	{
@@ -25,10 +25,10 @@ int	more_built_in(char **cmd, t_data *t)
 		{
 			printf("unset: not enough arguments\n");
 			g_exit = 1;
-			return (free_doublepointer(cmd), 1);
+			return (free_doublepointer(cmd), free_doublepointer(t->split_path), 1);
 		}
 		unset(cmd[1], t);
-		return (free_doublepointer(cmd), 1);
+		return (free_doublepointer(cmd), free_doublepointer(t->split_path), 1);
 	}
 	else
 		return (0);
@@ -39,24 +39,24 @@ int	built_in_functions(char **cmd, t_data *t, char *cmdline)
 	if (!ft_strcmp(cmd[0], "cd"))
 	{
 		cd(cmd[1], t->envp);
-		return (free_doublepointer(cmd), 1);
+		return (free_doublepointer(cmd), free_doublepointer(t->split_path), 1);
 	}
 	if (!ft_strcmp(cmd[0], "pwd"))
 	{
 		pwd();
-		return (free_doublepointer(cmd), 1);
+		return (free_doublepointer(cmd), free_doublepointer(t->split_path), 1);
 	}
 	if (!ft_strcmp(cmd[0], "exit"))
 		ft_exit();
 	if (!ft_strcmp(cmd[0], "echo"))
 	{
 		ft_echo(cmdline, t);
-		return (free_doublepointer(cmd), 1);
+		return (free_doublepointer(cmd), free_doublepointer(t->split_path), 1);
 	}
 	if (!ft_strcmp(cmd[0], "env"))
 	{
 		ft_env(t);
-		return (free_doublepointer(cmd), 1);
+		return (free_doublepointer(cmd), free_doublepointer(t->split_path), 1);
 	}
 	else
 		return (more_built_in(cmd, t));
@@ -65,16 +65,15 @@ int	built_in_functions(char **cmd, t_data *t, char *cmdline)
 void	handl_line(char *cmd, t_data *t)
 {
 	char	*path;
-	char	**split_p;
 	char	**cmd_split;
 	int		i;
 
 	path = return_path(t->envp);
-	split_p = NULL;
+	t->split_path = NULL;
 	t->i = 0;
 	if (t->env_list)
 	{
-		split_p = split_path(path);
+		t->split_path = split_path(path);
 		t->i = count_words(path, ':');
 	}
 	free_pointer(path);
@@ -94,10 +93,10 @@ void	handl_line(char *cmd, t_data *t)
 		return ;
 	else if (!strncmp("./", cmd, 2) || !strncmp("/", cmd, 1))
 		execut_cmd("", cmd_split, cmd, t);
-	else if (cmd_found(t->i, split_p, cmd_split) == 0)
+	else if (cmd_found(t->i, t->split_path, cmd_split) == 0)
 		printf("COMMAND NOT FOUND\n");
 	else
-		execute_path(t, split_p, cmd_split, cmd);
+		execute_path(t, t->split_path, cmd_split, cmd);
 }
 
 int	unclosed_quotes(char *str)

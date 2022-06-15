@@ -19,14 +19,13 @@ void	cd(char *str, char **envp)
 
 	g_exit = 0;
 	path = NULL;
-	i = 0;
+	i = -1;
 	if (!str)
 	{
-		while (envp[i])
+		while (envp[++i])
 		{
 			if (ft_strnstr(envp[i], "HOME=", ft_strlen(envp[i])) != 0)
 				path = ft_substr(envp[i], 5, ft_strlen(envp[i]));
-			i++;
 		}
 		if (chdir(path) != 0)
 		{

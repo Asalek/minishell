@@ -37,7 +37,6 @@ t_list2	*echo_quotes(char *str)
 		}	
 		i++;
 	}
-	// free_pointer(arg);
 	return (t);
 }
 

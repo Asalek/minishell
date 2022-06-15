@@ -19,7 +19,7 @@ void	exit_shell(int a)
 		g_exit = 1;
 		ft_putstr_fd("\n", 1);
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	else if (a == SIGQUIT)
@@ -45,11 +45,9 @@ char	single_or_double(char c)
 int	check_quots(char *cmd)
 {
 	int		i;
-	int		j;
 	char	c;
 
 	i = -1;
-	j = 0;
 	c = single_or_double(cmd[0]);
 	if (c != '\'' && c != '"')
 		return (0);

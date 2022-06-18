@@ -30,3 +30,21 @@ char	*replace_arg_env(char *str, t_data *t)
 	}
 	return ("");
 }
+
+int	count_er(char *line)
+{
+	int		i;
+	int		x;
+	int		count;
+
+	i = 0;
+	count = 0;
+	while (line[i])
+	{
+		x = return_i(line);
+		count++;
+		line = &line[x];
+		i = 0;
+	}
+	return (count);
+}

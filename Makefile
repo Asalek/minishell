@@ -28,10 +28,12 @@ SEGFAULT = -fsanitize=address
 CFLAGS = -Wall -Wextra -Werror
 SRC = main.c check_path.c excute_cmd.c built_in.c libft.c create_linked_list.c check_syntax_cmd.c \
 quotes.c pipee.c pipe.c check_quots.c built_in_additional.c echo.c split_pipe.c \
-check_pipe.c free.c
+check_pipe.c free.c slice_parss_red.c handle_redirecion.c reverse_cmd.c collect_cmd.c complete_cmd.c \
+rreverse_cmd_2.c quots_red.c quots_.c redirect_files.c open_files_1.c open_files_2.c herdoc_handle.c if_is_bult.c \
+execut_built.c red_execut.c
 
 OBJ = $(SRC:.c=.o)
-CFLAGS += -g -I /goinfre/${USER}/.brew/opt/readline/include -D BUFFER_SIZE=1
+CFLAGS := -g -I /goinfre/${USER}/.brew/opt/readline/include -D BUFFER_SIZE=1
 LDFLAGS := -L /goinfre/${USER}/.brew/opt/readline/lib
 
 all: $(NAME)

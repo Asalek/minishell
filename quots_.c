@@ -12,91 +12,46 @@
 
 #include "minishell.h"
 
-size_t	count_words(char const *s, char c)
+int	is_echo(char *line)
 {
-	size_t	count;
-
-	count = 0;
-	while (*s != '\0')
-	{
-		if (*s != c)
-		{
-			count++;
-			while (*s != '\0' && *s != c)
-				s++;
-		}
-		else
-			s++;
-	}
-	return (count);
-}
-
-void	remove_spaces(char *str)
-{
-	int	i;
+	int		i;
+	char	*echo;
 
 	i = 0;
-	if (str[0] == ' ' && ft_strlen(str) < 2)
-		return ;
-	while (str[i])
-	{
-		if (str[i] == ' ')
-		{
-			while (str[i])
-			{
-				str[i] = str[i + 1];
-				i++;
-			}
-		}
+	while (line[i] == ' ' && line[i])
 		i++;
-	}
-	str[i] = '\0';
-}
-
-void	remove_space_quotes(char **cmd_split)
-{
-	int	i;
-
-	i = 1;
-	while (cmd_split[i])
+	line = &line[i];
+	echo = ft_substr(line, 0, 4);
+	if (ft_strcmp(echo, "echo") == 0)
 	{
-		check_quots(cmd_split[i]);
-		remove_spaces(cmd_split[i]);
-		i++;
-	}
-}
-
-int	unclosed_quotes(char *str)
-{
-	int	i;
-	int	n;
-	int	s;
-
-	i = 0;
-	n = 0;
-	s = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'')
-			n++;
-		else if (str[i] == '"')
-			s++;
-		i++;
-	}
-	if (n % 2 != 0)
+		free(echo);
 		return (1);
-	if (s % 2 != 0)
-		return (1);
+	}
 	else
+	{
+		free(echo);
 		return (0);
+	}
 }
 
-void	check_redirection(char *cmd, t_data *t)
+int	check_qouts_(char *line, t_data *t)
 {
-	if (ft_strnstr(cmd, "<", ft_strlen(cmd))
-		|| ft_strnstr(cmd, ">", ft_strlen(cmd)))
+	if (is_echo(line) == 1)
+		return (1);
+	t->z = 0;
+	while (line[t->z])
 	{
-		redirection(cmd, t);
-		exit(0);
+		if (line[t->z] == '\'')
+		{
+			if (check_single(line, t) == 0)
+				return (0);
+		}
+		else if (line[t->z] == '"')
+		{
+			if (check_double(line, t) == 0)
+				return (0);
+		}
+		t->z++;
 	}
+	return (1);
 }

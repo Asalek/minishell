@@ -69,3 +69,83 @@ void	execut_cmd(char *path, char **cmd, char *command, t_data *t)
 	}
 	g_exit = WEXITSTATUS(t->i);
 }
+
+void	execut_cmd_2(char *path, char **cmd, char *command, t_data *t)
+{
+	char	*full_path;
+	int		word_count;
+	char	**parmlist;
+
+	full_path = ft_strjoin(path, cmd[0]);
+	word_count = count_words(command, ' ');
+	t->i = -1;
+	parmlist = malloc(sizeof(char *) * word_count + 1);
+	while (++t->i < word_count)
+		parmlist[t->i] = cmd[t->i];
+	parmlist[t->i] = NULL;
+	t->i = fork();
+	if (t->i == 0)
+	{
+		dup2(t->f[1], 1);
+		dup2(t->f[0], 0);
+		if (execve(full_path, parmlist, t->envp) == -1)
+			exit(0);
+	}
+	else
+	{
+		wait(&t->i);
+		free_all_2(full_path, path, cmd, parmlist);
+	}
+	g_exit = WEXITSTATUS(t->i);
+}
+
+int	command_found_2_(char **cmd_split, char *cmd, char **split_p, t_data *t)
+{
+	int	i;
+
+	i = 1;
+	while (cmd_split[i])
+	{
+		check_quots(cmd_split[i]);
+		remove_spaces(cmd_split[i]);
+		i++;
+	}
+	if (!cmd || !ft_strncmp(cmd, "", 1))
+		return (0);
+	while (*cmd == ' ')
+		cmd++;
+	if (!strncmp("./", cmd, 2) || !strncmp("/", cmd, 1))
+		return (1);
+	else if (cmd_found_2(t->i, split_p, cmd_split) == 0)
+	{
+		printf("COMMAND NOT FOUND\n");
+		return (0);
+	}
+	free_dp(cmd_split);
+	free_dp(split_p);
+	return (1);
+}
+
+int	command_found(char *cmd, t_data *t)
+{
+	char	*path;
+	char	**split_p;
+	char	**cmd_split;
+	int		i;
+
+	if (check_quots(cmd) == 127)
+	{
+		g_exit = 127;
+		return (printf("Phoenix> command not found\n"), 0);
+	}
+	path = return_path(t->envp);
+	split_p = NULL;
+	t->i = 0;
+	if (t->env_list)
+	{
+		split_p = split_path(path);
+		t->i = count_words(path, ':');
+	}
+	cmd_split = ft_split(cmd, ' ');
+	return (command_found_2_(cmd_split, cmd, split_p, t));
+}

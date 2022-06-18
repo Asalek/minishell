@@ -95,3 +95,15 @@ char	**split_pipe(char *str)
 	}
 	return (t.alloc);
 }
+
+int	che_ckspace(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && line[i] == ' ')
+		i++;
+	if (i == (int)ft_strlen(line))
+		return (0);
+	return (1);
+}

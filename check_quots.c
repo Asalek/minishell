@@ -19,7 +19,6 @@ void	exit_shell(int a)
 		g_exit = 1;
 		ft_putstr_fd("\n", 1);
 		rl_on_new_line();
-		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	else if (a == SIGQUIT)
@@ -69,3 +68,53 @@ int	check_quots(char *cmd)
 	cmd[i] = '\0';
 	return (0);
 }
+
+char	single_or_double_pipe(char *c)
+{
+	char	a;
+	int		i;
+
+	i = 0;
+	a = 'a';
+	while (c[i])
+	{
+		if (c[i] == '\'')
+			a = '\'';
+		else if (c[i] == '"')
+			a = '"';
+		i++;
+	}
+	return (a);
+}
+
+int	check_quots_pipe(char *cmd)
+{
+	int		i;
+	char	c;
+
+	c = single_or_double_pipe(cmd);
+	if (c != '\'' && c != '"')
+		return (0);
+	i = -1;
+	while (cmd[++i])
+		if (cmd[i] == c)
+			break ;
+	cmd[i] = ' ';
+	while (cmd[++i])
+	{
+		if (cmd[i] == c)
+		{
+			while (cmd[i])
+			{
+				cmd[i] = cmd[i + 1];
+				i++;
+			}
+		}
+		else if (cmd[i] == ' ')
+			return (g_exit = 127, 12);
+	}
+	return (cmd[i] = '\0', 0);
+}
+
+
+//rl_replace_line("", 0);  22

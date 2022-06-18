@@ -50,6 +50,7 @@ void	handl_linee(char *cmd, t_data *t)
 	while (*cmd == ' ')
 		cmd++;
 	remove_space_quotes(cmd_split);
+	check_redirection(cmd, t);
 	if (built_in_functions(cmd_split, t, cmd))
 		exit(0);
 	else if (!strncmp("./", cmd, 2))

@@ -33,7 +33,7 @@ int	check_2(char *line, t_echo *e, t_data *t)
 		return (printf("Phoenix: syntax error near unexpected token `|'\n"), 0);
 	}
 	free_dp(e->parssing);
-	return (1);
+	return (0);
 }
 
 int	pipe_syntax(char *str)

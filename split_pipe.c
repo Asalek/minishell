@@ -20,8 +20,8 @@ char	*ft_strcutt(char *str, int start, int end)
 	i = start;
 	while (i < end)
 		i++;
-	string = malloc((end - i) + 1);
-	if (!str)
+	string = malloc((end) + 1);
+	if (!str || !string)
 		return (NULL);
 	i = 0;
 	while (start < end)
@@ -55,13 +55,13 @@ int	quotes(char *str, int i)
 	if (str[i] == '\'')
 	{
 		i++;
-		while (str[i] != '\'')
+		while (str && str[i] != '\'')
 			i++;
 	}
-	else if (str[i] == '\"')
+	else if (str[i] == '"')
 	{
 		i++;
-		while (str[i] != '\"')
+		while (str && str[i] != '"')
 			i++;
 	}
 	return (i);
@@ -71,23 +71,26 @@ char	**split_pipe(char *str)
 {
 	t_echo	t;
 
+	t.alloc= NULL;
 	t.i = 0;
 	t.l = 0;
 	t.j = 0;
 	t.alloc = (char **)malloc(sizeof(char *) * (count_pipes(str) + 2));
+	if (!t.alloc)
+		return (NULL);
 	while (str[t.i])
 	{
-		if (str[t.i] == '\'' || str[t.i] == '\"')
-			t.i = quotes(str, t.i) + 1;
+		if (str[t.i] == '\'' || str[t.i] == '"')
+			t.i = quotes(str, t.i);
 		if (str[t.i] == '|')
 		{
 			t.alloc[t.l] = ft_strcutt(str, t.j, t.i);
 			t.j = t.i + 1;
 			t.l++;
 		}
-		if (str[t.i + 1] == '\0')
+		else if (str[t.i + 1] == '\0')
 		{
-			t.alloc[t.l] = ft_strcutt(str, t.j, t.i + 1);
+			t.alloc[t.l] = ft_strcutt(str, t.j, t.i + 2);
 			t.l++;
 			t.alloc[t.l] = NULL;
 		}

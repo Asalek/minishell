@@ -41,12 +41,12 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@echo "${WHITE}░M░i░n░i░ ░S░h░e░l░l░\033[0m"
 	@make -C libft/
-	@$(CC) $(CFLAGS) $(LDFLAGS) -lreadline libft/libft.a $^ -o $@
+	@$(CC) -fsanitize=address  -L $(shell brew --prefix readline)/lib -lreadline libft/libft.a $^ -o $@
 	@echo "${GREEN}all${RESET}"
 #	@clear
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) -I $(shell brew --prefix readline)/include -c $< -o $@
 
 clean:
 	@rm -rf $(OBJ)

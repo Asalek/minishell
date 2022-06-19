@@ -28,13 +28,13 @@ int	skip_n(char *str)
 
 int	ret_between_quotes(char *str, int i)
 {
-	if (str[i] == '\'')
+	if (str && str[i] == '\'')
 	{
 		i++;
 		while (str[i] != '\'')
 			i++;
 	}
-	else if (str[i] == '\"')
+	else if (str && str[i] == '\"')
 	{
 		i++;
 		while (str[i] != '\"')

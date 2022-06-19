@@ -15,18 +15,22 @@
 size_t	count_words(char const *s, char c)
 {
 	size_t	count;
+	int		i;
 
 	count = 0;
-	while (*s != '\0')
+	i =0;
+	if (!s || !s[0] || s[0] == '\0' || s == NULL)
+		return (0);
+	while (s[i])
 	{
-		if (*s != c)
+		if (s[i] != c)
 		{
 			count++;
-			while (*s != '\0' && *s != c)
-				s++;
+			while (s[i] != '\0' && s[i] != c)
+				i++;
 		}
 		else
-			s++;
+			i++;
 	}
 	return (count);
 }

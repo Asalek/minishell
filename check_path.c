@@ -16,7 +16,7 @@ char	**split_path(char *string)
 {
 	char	**path;
 
-	if (string == NULL)
+	if (string == NULL || !string)
 		return (NULL);
 	path = ft_split(string, ':');
 	free_pointer(string);
@@ -29,6 +29,7 @@ char	*return_path(char **envp)
 	char	*path;
 
 	i = 0;
+	path = NULL;
 	while (envp[i])
 	{
 		if (ft_strnstr(envp[i], "PATH=", ft_strlen(envp[i])) != 0)

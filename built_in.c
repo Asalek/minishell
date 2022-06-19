@@ -48,8 +48,13 @@ void	ft_env(t_data *t)
 	node = t->env_list;
 	while (node)
 	{
-		printf("%s=%s\n", node->name, node->value);
-		node = node->next;
+		if (node->value == NULL)
+			node = node->next;
+		else
+		{
+			printf("%s=%s\n", node->name, node->value);
+			node = node->next;
+		}
 	}
 	g_exit = 0;
 }
@@ -75,7 +80,6 @@ int	is_in_node(t_list2 *t, char *name, char *arg)
 
 void	export(char *arg, t_data *t)
 {
-	int		i;
 	char	**splited;
 	t_list2	*p;
 	t_list2	*node;
@@ -83,13 +87,20 @@ void	export(char *arg, t_data *t)
 	g_exit = 0;
 	node = t->env_list;
 	p = NULL;
-	i = 0;
 	if (!arg)
 	{
 		while (node)
 		{
-			printf("declare -x %s=%s\n", node->name, node->value);
-			node = node->next;
+			if (node->value == NULL)
+			{
+				printf("declare -x %s\n", node->name);
+				node = node->next;
+			}
+			else
+			{
+				printf("declare -x %s=%s\n", node->name, node->value);
+				node = node->next;
+			}
 		}
 	}
 	else

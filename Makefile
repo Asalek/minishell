@@ -33,7 +33,7 @@ rreverse_cmd_2.c quots_red.c quots_.c redirect_files.c open_files_1.c open_files
 execut_built.c red_execut.c
 
 OBJ = $(SRC:.c=.o)
-CFLAGS := -g -I /goinfre/${USER}/.brew/opt/readline/include -D BUFFER_SIZE=1
+CFLAGS += -g -I /goinfre/${USER}/.brew/opt/readline/include -D BUFFER_SIZE=1
 LDFLAGS := -L /goinfre/${USER}/.brew/opt/readline/lib
 
 all: $(NAME)
@@ -41,7 +41,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@echo "${WHITE}░M░i░n░i░ ░S░h░e░l░l░\033[0m"
 	@make -C libft/
-	@$(CC) -fsanitize=address  -L $(shell brew --prefix readline)/lib -lreadline libft/libft.a $^ -o $@
+	@$(CC) -L $(shell brew --prefix readline)/lib -lreadline libft/libft.a $^ -o $@
 	@echo "${GREEN}all${RESET}"
 #	@clear
 

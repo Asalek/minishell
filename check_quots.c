@@ -80,9 +80,9 @@ char	single_or_double_pipe(char *c)
 	while (c[i])
 	{
 		if (c[i] == '\'')
-			a = '\'';
+			return (a = '\'');
 		else if (c[i] == '"')
-			a = '"';
+			return (a = '"');
 		i++;
 	}
 	return (a);
@@ -116,6 +116,3 @@ int	check_quots_pipe(char *cmd)
 	}
 	return (cmd[i] = '\0', 0);
 }
-
-
-//rl_replace_line("", 0);  22

@@ -41,6 +41,8 @@ int	pipe_syntax(char *str)
 	int	i;
 
 	i = 0;
+	if (i == 0 && str[i] == '|')
+		return (printf("Phoenix: syntax error near token`|'\n"), 0);
 	while (str[i])
 	{
 		if (str[i] == '|')
@@ -69,6 +71,7 @@ char	*line_handle(char *line, t_echo *e, t_data *t)
 	{
 		if (!pipe_syntax(line))
 		{
+			g_exit = 258;
 			return (0);
 		}
 		if (check_2(line, e, t) == 0)

@@ -71,13 +71,11 @@ char	**split_pipe(char *str)
 {
 	t_echo	t;
 
-	t.alloc= NULL;
+	t.alloc = NULL;
 	t.i = 0;
 	t.l = 0;
 	t.j = 0;
 	t.alloc = (char **)malloc(sizeof(char *) * (count_pipes(str) + 2));
-	if (!t.alloc)
-		return (NULL);
 	while (str[t.i])
 	{
 		if (str[t.i] == '\'' || str[t.i] == '"')
@@ -91,8 +89,7 @@ char	**split_pipe(char *str)
 		else if (str[t.i + 1] == '\0')
 		{
 			t.alloc[t.l] = ft_strcutt(str, t.j, t.i + 2);
-			t.l++;
-			t.alloc[t.l] = NULL;
+			t.alloc[++t.l] = NULL;
 		}
 		t.i++;
 	}

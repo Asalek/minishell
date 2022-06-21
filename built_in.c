@@ -80,7 +80,7 @@ int	is_in_node(t_list2 *t, char *name, char *arg)
 
 void	export(char *arg, t_data *t, char *line)
 {
-	char	**splited;
+	t_data	a;
 	t_list2	*p;
 	t_list2	*node;
 
@@ -92,23 +92,17 @@ void	export(char *arg, t_data *t, char *line)
 		while (node)
 		{
 			if (node->value == NULL)
-			{
 				printf("declare -x %s\n", node->name);
-				node = node->next;
-			}
 			else
-			{
-				printf("declare -x %s=%s\n", node->name, node->value);
-				node = node->next;
-			}
+				printf("declare -x %s=\"%s\"\n", node->name, node->value);
+			node = node->next;
 		}
 	}
 	else
 	{
-		splited = ft_split(arg, '=');
-		if (is_in_node(t->env_list, splited[0], splited[1]))
+		if (!check_export_arg(&a, line, t))
 			return ;
-		p = ft_lstneww(splited[0], splited[1]);
+		p = ft_lstneww(a.str, a.str2);
 		ft_lstadd_backk(&t->env_list, p);
 	}
 }

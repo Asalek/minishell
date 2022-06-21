@@ -14,7 +14,7 @@
 
 void	rdirect_1(char *line, t_data *t)
 {
-	if(t->len == 1)
+	if (t->len == 1)
 	{
 		if (line[0] == '>' && line[1] == '>')
 			t->f[1] = append_red(line, t);

@@ -18,7 +18,7 @@ size_t	count_words(char const *s, char c)
 	int		i;
 
 	count = 0;
-	i =0;
+	i = 0;
 	if (!s || !s[0] || s[0] == '\0' || s == NULL)
 		return (0);
 	while (s[i])

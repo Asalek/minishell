@@ -168,6 +168,10 @@ void	remove_space_quotes(char **cmd_split);
 int		unclosed_quotes(char *str);
 void	check_redirection(char *cmd, t_data *t);
 int		check_quots_pipe(char *cmd);
+int		chech_export(char *str);
+int		check_spaces(char *str);
+int		check_export_arg(t_data *a, char *line, t_data *t);
+int		is_in_node(t_list2 *t, char *name, char *arg);
 
 //free
 

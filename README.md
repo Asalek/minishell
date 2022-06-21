@@ -10,6 +10,7 @@ cd minishell
 git clone https://github.com/Homebrew/brew ~/.brew
 echo 'export PATH=$HOME/.brew/bin:$PATH' >> $HOME/.zshrc
 source $HOME/.zshrc
+./brew_installer.bash
 brew install openssl@1.1
 brew install readline
 make && clear

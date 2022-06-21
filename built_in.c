@@ -104,6 +104,7 @@ void	export(char *arg, t_data *t, char *line)
 			return ;
 		p = ft_lstneww(a.str, a.str2);
 		ft_lstadd_backk(&t->env_list, p);
+		free_pointer(a.cmd);
 	}
 }
 

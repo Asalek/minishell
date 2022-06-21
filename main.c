@@ -143,4 +143,6 @@ int	main(int argc, char **argv, char **envp)
 		free(line);
 		line = readline(PROMPT);
 	}
+	free_all(NULL, NULL, list);
+	free(e);
 }

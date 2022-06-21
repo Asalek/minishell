@@ -63,10 +63,10 @@ int	check_export_arg(t_data *a, char *line, t_data *t)
 			a->str2 = a->commands[1];
 	}
 	if (!chech_export(a->str))
-		return (0);
+		return (free_all(a->cmd, a->commands, NULL), 0);
 	if (!check_spaces(line))
-		return (0);
+		return (free_all(a->cmd, a->commands, NULL), 0);
 	if (is_in_node(t->env_list, a->str, a->str2))
-		return (0);
+		return (free_all(a->cmd, a->commands, NULL), 0);
 	return (1);
 }

@@ -12,11 +12,11 @@
 
 #include "minishell.h"
 
-int	more_built_in(char **cmd, t_data *t)
+int	more_built_in(char **cmd, t_data *t, char *line)
 {
 	if (!ft_strcmp(cmd[0], "export"))
 	{
-		export(cmd[1], t);
+		export(cmd[1], t, line);
 		return (free_dp(cmd), free_dp(t->split_path), 1);
 	}
 	if (!ft_strcmp(cmd[0], "unset"))
@@ -59,7 +59,7 @@ int	built_in_functions(char **cmd, t_data *t, char *cmdline)
 		return (free_dp(cmd), free_dp(t->split_path), 1);
 	}
 	else
-		return (more_built_in(cmd, t));
+		return (more_built_in(cmd, t, cmdline));
 }
 
 void	handl_line(char *cmd, t_data *t)

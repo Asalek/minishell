@@ -78,7 +78,7 @@ int	is_in_node(t_list2 *t, char *name, char *arg)
 	return (0);
 }
 
-void	export(char *arg, t_data *t)
+void	export(char *arg, t_data *t, char *line)
 {
 	char	**splited;
 	t_list2	*p;

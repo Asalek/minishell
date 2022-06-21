@@ -14,14 +14,29 @@
 
 void	rdirect_1(char *line, t_data *t)
 {
-	if (line[0] == '>' && line[1] == '>')
-		t->f[1] = append_red(line, t);
-	else if (line[0] == '>' && line[1] != '>')
-		t->f[1] = output_red(line, t);
-	else if (line[0] == '<' && line[1] == '<')
-		t->f[0] = open("/tmp/phenix.txt", O_RDWR, 0777);
-	else if (line[0] == '<' && line[1] != '<')
-		t->f[0] = input_red(line, t);
+	if(t->len == 1)
+	{
+		if (line[0] == '>' && line[1] == '>')
+			t->f[1] = append_red(line, t);
+		else if (line[0] == '>' && line[1] != '>')
+			t->f[1] = output_red(line, t);
+		else if (line[0] == '<' && line[1] == '<')
+			t->f[0] = open("/tmp/phenix.txt", O_RDWR, 0777);
+		else if (line[0] == '<' && line[1] != '<')
+			t->f[0] = input_red(line, t);
+		return ;
+	}
+	else
+	{
+		if (line[0] == '>' && line[1] == '>')
+			t->f[1] = append_red(line, t);
+		else if (line[0] == '>' && line[1] != '>')
+			t->f[1] = output_red(line, t);
+		else if (line[0] == '<' && line[1] == '<')
+			t->f[0] = open("/tmp/phenix.txt", O_RDWR, 0777);
+		else if (line[0] == '<' && line[1] != '<')
+			t->f[0] = input_red(line, t);
+	}
 }
 
 void	execut_red_bult(char *line, t_data *t)

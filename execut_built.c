@@ -12,11 +12,11 @@
 
 #include "minishell.h"
 
-int	more_built_(char **cmd, t_data *t)
+int	more_built_(char **cmd, t_data *t, char *line)
 {
 	if (!ft_strcmp(cmd[0], "export"))
 	{
-		export(cmd[1], t);
+		export(cmd[1], t, line);
 		exit(0);
 	}
 	if (!ft_strcmp(cmd[0], "unset"))
@@ -44,7 +44,7 @@ int	more_built(char **cmd, t_data *t, char *cmdline)
 		pwd();
 		exit(0);
 	}
-	return (more_built_(cmd, t));
+	return (more_built_(cmd, t, cmdline));
 }
 
 int	execut_built_red(char **cmd, t_data *t, char *cmdline, int i)

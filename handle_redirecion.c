@@ -26,6 +26,26 @@ static	void	ft_fr(t_data *t, char *line)
 	}
 }
 
+void create_files(char *line, t_data *t)
+{
+	int		i;
+	int		x;
+	char	*str;
+
+	t->len = 1;
+	i = 0;
+	while (line[i])
+	{
+		x = return_i(line);
+		str = ft_substr(line, 0, x);
+		rdirect_1(str, t);
+		free(str);
+		line = &line[x];
+		i = 0;
+	}
+
+}
+
 static int	check_(char *cmd, char *line, t_data *t)
 {
 	int	i;
@@ -34,9 +54,14 @@ static int	check_(char *cmd, char *line, t_data *t)
 	while (cmd[i] == ' ')
 		i++;
 	if (i == (int)ft_strlen(cmd))
+	{
+		 
+		create_files(line, t);
 		return (0);
+	}
 	else
 	{
+
 		redirect_files(line, t);
 		return (1);
 	}
@@ -48,6 +73,7 @@ static	void	red_(t_data *t, char *line)
 		herdoc_call(line, t);
 	else
 	{
+		
 		if (check_(t->command, line, t) == 0)
 			return ;
 	}

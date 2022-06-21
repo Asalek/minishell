@@ -99,7 +99,10 @@ void	herdoc_call(char *line, t_data *t)
 		while (t->command[i] == ' ')
 			i++;
 		if (i == (int)ft_strlen(t->command))
+		{
+			create_files(line, t);
 			return ;
+		}
 		redirect_files(line, t);
 	}
 }

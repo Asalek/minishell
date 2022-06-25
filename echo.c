@@ -131,12 +131,12 @@ void	ft_echo(char *str, t_data *t)
 	char	*str_e;
 
 	n = 0;
-	if (!ft_strncmp(str, "echo", 5))
+	if (!ft_strncmp(str, "echo ", 5))
+		str = ft_strcut(str, 5, ft_strlen(str));
+	if (!ft_strncmp(str, "echo", 4))
 		str = ft_strcut(str, 4, ft_strlen(str));
 	n = skip_n(str);
 	str_e = ft_strcut(str, n, ft_strlen(str));
-	if (str_e[0] == '\0' || !str_e[0])
-		return ;
 	p = echo_quotes(str_e);
 	ptr = p;
 	while (ptr)
@@ -146,7 +146,7 @@ void	ft_echo(char *str, t_data *t)
 	}
 	if (n == 0)
 		printf("\n");
-	// free_all(str, NULL, p);
-	// free_all(str_e, NULL, NULL);
+	free_all(str, NULL, p);
+	free_all(str_e, NULL, NULL);
 	g_exit = 0;
 }

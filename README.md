@@ -1,4 +1,9 @@
+# mini_SHELL
 
+### test exemple :
+<img src="https://github.com/Asalek/minishell/blob/master/GIF/test.gif" width="800" height="400" />
+
+![](https://github.com/Asalek/minishell/GIF/test.gif)
 
 ## how To Use
 
